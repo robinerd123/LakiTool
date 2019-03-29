@@ -1,9 +1,9 @@
 # LakiTool
-##Level editor for SM64 decomp
+## Level editor for SM64 decomp
 
-###Current features
+### Current features
 
-#####F3D Viewer
+##### F3D Viewer
 - TRI1 and TRI2 support
 - Texture support
 - Automatic texture loading
@@ -12,13 +12,13 @@
 - Fast3D Tile wraps/wrapt
 - Other minor F3D stuff
 
-#####Geo decoding
+##### Geo decoding
 - Coming soon
 
-#####Level script decoding
+##### Level script decoding
 - Coming soon
 
-#####Level editing
+##### Level editing
 - Coming soon
 
 ![](https://i.imgur.com/iYc1qsI.png)
