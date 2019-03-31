@@ -52,35 +52,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="F3DRender.cs" />
-    <Compile Include="GMUtil.cs" />
-    <Compile Include="LUTs.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="F3DUtils.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="LUT\GData.cs" />
+    <Compile Include="LUT\Label.cs" />
+    <Compile Include="LUT\LUTSub.cs" />
+    <Compile Include="LUT\Utils\LabelUtil.cs" />
+    <Compile Include="LUT\Utils\LUTUtil.cs" />
+    <Compile Include="GBI\Utils\GMUtil.cs" />
+    <Compile Include="LUT\LUTs.cs" />
+    <Compile Include="MISC\Camera.cs" />
+    <Compile Include="GBI\Utils\F3DUtils.cs" />
+    <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="Forms\Form2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
+    <Compile Include="Forms\Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
-    <Compile Include="GBI.cs" />
-    <Compile Include="GBIConsts.cs" />
-    <Compile Include="MISCUtils.cs" />
-    <Compile Include="ParseF3D.cs" />
+    <Compile Include="GBI\GBI.cs" />
+    <Compile Include="GBI\GBIConsts.cs" />
+    <Compile Include="MISC\Utils\MISCUtils.cs" />
+    <Compile Include="GBI\ParseF3D.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vertex.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <Compile Include="GBI\Vertex.cs" />
+    <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
+    <EmbeddedResource Include="Forms\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
