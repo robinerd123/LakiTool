@@ -10,8 +10,8 @@ namespace LakiTool.Mdl.OBJ.OBJFile
     {
         public vt(short t, short c, int x, int y)
         {
-            u = (t / 1024f) / x;
-            v = (c / 1024f) / y;
+            u = (((t / 1024f) / x)*32)*-1;
+            v = (((c / 1024f) / y)*32)*-1;
         }
         public float u, v;
         public string val()
