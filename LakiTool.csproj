@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
+      <HintPath>MISC\packages\OpenTK.3.0.1\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.GLControl.3.0.1\lib\net20\OpenTK.GLControl.dll</HintPath>
+      <HintPath>MISC\packages\OpenTK.GLControl.3.0.1\lib\net20\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +52,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Col\Col.cs" />
+    <Compile Include="Col\ColCMDs.cs" />
+    <Compile Include="Col\ColConsts.cs" />
+    <Compile Include="Col\ColVertex.cs" />
+    <Compile Include="Col\ParseCol.cs" />
+    <Compile Include="Col\Util\ColUtil.cs" />
+    <Compile Include="Col\Util\GSUtil.cs" />
+    <Compile Include="C\CConsts.cs" />
+    <Compile Include="C\Utils\CUtils.cs" />
+    <Compile Include="C\Utils\GCUtil.cs" />
+    <Compile Include="Inc\Macro.cs" />
+    <Compile Include="Inc\MacroConsts.cs" />
+    <Compile Include="Inc\MacroSet.cs" />
+    <Compile Include="Inc\MacroVal.cs" />
+    <Compile Include="Inc\MacroWrites.cs" />
+    <Compile Include="Inc\Util\MacroUtils.cs" />
     <Compile Include="LUT\GData.cs" />
     <Compile Include="LUT\Label.cs" />
     <Compile Include="LUT\LUTSub.cs" />
@@ -59,6 +75,14 @@
     <Compile Include="LUT\Utils\LUTUtil.cs" />
     <Compile Include="GBI\Utils\GMUtil.cs" />
     <Compile Include="LUT\LUTs.cs" />
+    <Compile Include="Mdl\OBJ\OBJ.cs" />
+    <Compile Include="Mdl\OBJ\OBJFile\f.cs" />
+    <Compile Include="Mdl\OBJ\OBJFile\fFmt.cs" />
+    <Compile Include="Mdl\OBJ\OBJFile\o.cs" />
+    <Compile Include="Mdl\OBJ\OBJFile\v.cs" />
+    <Compile Include="Mdl\OBJ\OBJFile\vn.cs" />
+    <Compile Include="Mdl\OBJ\OBJFile\vt.cs" />
+    <Compile Include="Mdl\OBJ\Utils\OBJFileUtil.cs" />
     <Compile Include="MISC\Camera.cs" />
     <Compile Include="GBI\Utils\F3DUtils.cs" />
     <Compile Include="Forms\Form1.cs">
@@ -75,10 +99,15 @@
     </Compile>
     <Compile Include="GBI\GBI.cs" />
     <Compile Include="GBI\GBIConsts.cs" />
+    <Compile Include="MISC\Game.cs" />
     <Compile Include="MISC\Utils\MISCUtils.cs" />
     <Compile Include="GBI\ParseF3D.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OBJs\Special\Special.cs" />
+    <Compile Include="OBJs\Special\SpecialConsts.cs" />
+    <Compile Include="OBJs\Special\Utils\GSOUtil.cs" />
+    <Compile Include="OBJs\Special\Utils\SpecialUtil.cs" />
+    <Compile Include="MISC\Program.cs" />
+    <Compile Include="MISC\Properties\AssemblyInfo.cs" />
     <Compile Include="GBI\Vertex.cs" />
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -87,30 +116,33 @@
     <EmbeddedResource Include="Forms\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="MISC\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="MISC\Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
+    <None Include="MISC\OpenTK.dll.config" />
+    <None Include="MISC\packages.config" />
+    <None Include="MISC\Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="MISC\Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="MISC\App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Geo\Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

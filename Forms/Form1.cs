@@ -42,7 +42,7 @@ namespace SM64LevelUp
 
         bool mic = false;
 
-        
+
 
         private void doRenderStuff(object sender, EventArgs e)
         {
@@ -65,6 +65,7 @@ namespace SM64LevelUp
             }
         }
         bool vertcolor = true;
+        bool f3d = false, col = false;
         public void Render(Rectangle ClientRectangle, int Width, int Height, GLControl RenderPanel)
         {
             GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
@@ -86,25 +87,36 @@ namespace SM64LevelUp
             lookat.Y = (float)Math.Sin((float)cam.Orientation.Y);
             lookat.Z = (float)(Math.Sin((float)cam.Orientation.X) * Math.Cos((float)cam.Orientation.Y));
             GL.Light(LightName.Light0, LightParameter.Position, new float[] { Math.Abs(lookat.X), Math.Abs(lookat.Y), Math.Abs(lookat.Z), 0.0f });
-            ParseF3D parse = new ParseF3D(lines);
-            if (!textured) GL.Disable(EnableCap.Texture2D); else GL.Enable(EnableCap.Texture2D);
-            GL.Begin(BeginMode.Triangles);
-            if (!seq)
+            if (radioButton2.Checked)
             {
-                foreach (int torenderitems in torender)
+                if (!textured) GL.Disable(EnableCap.Texture2D); else GL.Enable(EnableCap.Texture2D);
+                GL.Begin(BeginMode.Triangles);
+                if (!seq)
                 {
-                    GL.Begin(BeginMode.Triangles);
-                    parse.ParseDL(torenderitems, GBIc, LUTc);
-                    GL.End();
+                    foreach (int torenderitems in torender)
+                    {
+                        GL.Begin(BeginMode.Triangles);
+                        parse.ParseDL(torenderitems, GBIc, LUTc);
+                        GL.End();
+                    }
                 }
+                else
+                {
+                    parse.ParseDL(0, GBIc, LUTc);
+                }
+                GL.End();
+            } else {
+                GL.Disable(EnableCap.Lighting);
+                GL.Disable(EnableCap.Light0);
+                GL.Disable(EnableCap.ColorMaterial);
+                LakiTool.Col.ParseCol parse = new LakiTool.Col.ParseCol(lines);
+                GL.Begin(BeginMode.Triangles);
+                parse.ParseColData();
+                GL.End();
             }
-            else
-            {
-                parse.ParseDL(0, GBIc, LUTc);
-            }
-            GL.End();
             RenderPanel.SwapBuffers();
         }
+        ParseF3D parse = new ParseF3D(new string[]{"0"});
         GBI GBIc = new GBI();
         LUTs LUTc = new LUTs();
         LUTUtil lutmanager = new LUTUtil();
@@ -160,11 +172,10 @@ namespace SM64LevelUp
             loadobj.FilterIndex = 1;
             if (loadobj.ShowDialog() == DialogResult.OK)
             {
+                radioButton2.Checked = true;
+                radioButton1.Enabled = false;
                 checkedListBox1.Items.Clear();
                 listBox1.Items.Clear();
-                FolderBrowserDialog fb = new FolderBrowserDialog();
-                fb.SelectedPath = (Path.GetDirectoryName(loadobj.FileName));
-                fb.ShowDialog();
                 lines = File.ReadAllLines(loadobj.FileName);
                 int n = 0;
                 string fname = "";
@@ -190,13 +201,14 @@ namespace SM64LevelUp
                     n++;
 
                 }
+                f3d = true;
                 timer1.Enabled = true;
                 lutmanager.dldata = lines;
                 lutmanager.curFile = loadobj.FileName;
-                lutmanager.fbpath = fb.SelectedPath;
+                lutmanager.fbpath = LakiTool.MISC.Game.gamePath;
                 lutmanager.initF3D();
                 LUTc = lutmanager.luts;
-
+                parse = new ParseF3D(lines);
                 button2.PerformClick();
             }
         }
@@ -297,6 +309,98 @@ namespace SM64LevelUp
                     break;
             }
             button1.Enabled = false;
+        }
+
+        private void fixCollisionDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog loadobj = new OpenFileDialog();
+            loadobj.Filter = "outdated collision data|*.s";
+            loadobj.FilterIndex = 1;
+            if (loadobj.ShowDialog() == DialogResult.OK)
+            {
+                string[] fixedCollision = LakiTool.Col.Util.ColUtil.colDataFix(File.ReadAllLines(loadobj.FileName));
+                File.Delete(loadobj.FileName);
+                File.WriteAllLines(loadobj.FileName, fixedCollision);
+                MessageBox.Show("Collision file fixed succesfully!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openGeoScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog loadobj = new OpenFileDialog();
+            loadobj.Filter = "geo data|*.s";
+            loadobj.FilterIndex = 1;
+            if (loadobj.ShowDialog() == DialogResult.OK)
+            {
+                radioButton1.Checked = true;
+                radioButton2.Enabled = false;
+                lines = File.ReadAllLines(loadobj.FileName);
+                checkedListBox1.Items.Clear();
+                listBox1.Items.Clear();
+                timer1.Enabled = true;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            LakiTool.Mdl.OBJ.OBJ fullObj = new LakiTool.Mdl.OBJ.OBJ();
+            if (!seq)
+            {
+                foreach (int torenderitems in torender)
+                {
+                    fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(LUTc, lines, torenderitems, lines[torenderitems-2].Replace("glabel ", "").Replace(":", "").Split()[0]));
+                }
+            }
+            else
+            {
+                fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(LUTc, lines));
+            }
+            File.WriteAllLines("outfull.obj", fullObj.val());
+        }
+
+        private void levelToolStripMenuItem_Click()
+        {
+            //System.Windows.Forms.MessageBox.Show("No game folder is selected!\nLoad your game folder via Set>Game folder path.", "No game folder selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (Environment.GetEnvironmentVariable("sm64gamepath", EnvironmentVariableTarget.User) != null)
+            {
+                levelToolStripMenuItem.Enabled = true;
+                LakiTool.MISC.Game.gamePath = Environment.GetEnvironmentVariable("sm64gamepath", EnvironmentVariableTarget.User);
+            }
+        }
+
+        private void gamePathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fb = new FolderBrowserDialog();
+            fb.SelectedPath = (Path.GetDirectoryName(Directory.GetCurrentDirectory()));
+            fb.ShowDialog();
+            LakiTool.MISC.Game.gamePath = fb.SelectedPath;
+            Environment.SetEnvironmentVariable("sm64gamepath", fb.SelectedPath, EnvironmentVariableTarget.User);
+            levelToolStripMenuItem.Enabled = true;
+        }
+
+        private void openCollisionDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog loadobj = new OpenFileDialog();
+            loadobj.Filter = "collision data|*.s";
+            loadobj.FilterIndex = 1;
+            if (loadobj.ShowDialog() == DialogResult.OK)
+            {
+                radioButton1.Checked = true;
+                radioButton2.Enabled = false;
+                lines = File.ReadAllLines(loadobj.FileName);
+                checkedListBox1.Items.Clear();
+                listBox1.Items.Clear();
+                timer1.Enabled = true;
+            }
         }
     }
 }

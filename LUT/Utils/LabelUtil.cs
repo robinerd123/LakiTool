@@ -35,7 +35,6 @@ namespace LakiTool.LUT.Utils
             {
                 line = 0;
                 List<string> lines = new List<string>();
-
                 Directory.EnumerateFiles(rootPath + "/bin/", "*.s").ToList().ForEach(x => lines.Add(x));
                 foreach (string llist in lines)
                 {

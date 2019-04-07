@@ -85,9 +85,9 @@ namespace LakiTool
                     tl.texSubData.label = LakiTool.LUT.Utils.LabelUtil.findLabelFromName(vals[4], curFile, fbpath, true);
                     tl.texSubData.gData.GFile = curFile;
                     tl.texSubData.gData.GLine = (uint)n + 1;
-                    tl.incbinFile = MISCUtils.ParseAsmbd(File.ReadAllLines(tl.texSubData.label.labelFile)[tl.texSubData.label.labelLine])[1].Replace("\"", "");
                     if (tl.texSubData.label.labelFound)
                     {
+                        tl.incbinFile = MISCUtils.ParseAsmbd(File.ReadAllLines(tl.texSubData.label.labelFile)[tl.texSubData.label.labelLine])[1].Replace("\"", "");
                         string tp = fbpath + "/" + tl.incbinFile;
                         if (File.Exists(tp + ".png"))
                         {

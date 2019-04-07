@@ -48,6 +48,18 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.openCollisionDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.fixCollisionDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.openGeoScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gamePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -71,7 +83,8 @@
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.Window;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.levelToolStripMenuItem});
+            this.levelToolStripMenuItem,
+            this.setToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(650, 24);
@@ -81,7 +94,12 @@
             // levelToolStripMenuItem
             // 
             this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openLevelFolderToolStripMenuItem});
+            this.openLevelFolderToolStripMenuItem,
+            this.openCollisionDataToolStripMenuItem,
+            this.openGeoScriptToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.fixCollisionDataToolStripMenuItem});
+            this.levelToolStripMenuItem.Enabled = false;
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
             this.levelToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.levelToolStripMenuItem.Text = "File";
@@ -89,7 +107,7 @@
             // openLevelFolderToolStripMenuItem
             // 
             this.openLevelFolderToolStripMenuItem.Name = "openLevelFolderToolStripMenuItem";
-            this.openLevelFolderToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openLevelFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openLevelFolderToolStripMenuItem.Text = "Open DL data";
             this.openLevelFolderToolStripMenuItem.Click += new System.EventHandler(this.openLevelFolderToolStripMenuItem_Click);
             // 
@@ -121,6 +139,8 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -129,8 +149,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button4);
             this.tabPage1.Controls.Add(this.comboBox1);
-            this.tabPage1.Controls.Add(this.checkBox3);
             this.tabPage1.Controls.Add(this.checkBox2);
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.checkedListBox1);
@@ -164,7 +184,7 @@
             this.checkBox3.AutoSize = true;
             this.checkBox3.Checked = true;
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(106, 318);
+            this.checkBox3.Location = new System.Drawing.Point(206, 386);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(68, 17);
             this.checkBox3.TabIndex = 24;
@@ -249,11 +269,116 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "0 FPS";
             // 
+            // openCollisionDataToolStripMenuItem
+            // 
+            this.openCollisionDataToolStripMenuItem.Name = "openCollisionDataToolStripMenuItem";
+            this.openCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openCollisionDataToolStripMenuItem.Text = "Open collision data";
+            this.openCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.openCollisionDataToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // fixCollisionDataToolStripMenuItem
+            // 
+            this.fixCollisionDataToolStripMenuItem.Name = "fixCollisionDataToolStripMenuItem";
+            this.fixCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fixCollisionDataToolStripMenuItem.Text = "Fix collision data";
+            this.fixCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.fixCollisionDataToolStripMenuItem_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(180, 341);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Objects";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(422, 387);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Render:";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(473, 385);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(63, 17);
+            this.radioButton1.TabIndex = 19;
+            this.radioButton1.Text = "Collision";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
+            this.radioButton2.Location = new System.Drawing.Point(542, 385);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(89, 17);
+            this.radioButton2.TabIndex = 20;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Display List(s)";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // openGeoScriptToolStripMenuItem
+            // 
+            this.openGeoScriptToolStripMenuItem.Name = "openGeoScriptToolStripMenuItem";
+            this.openGeoScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openGeoScriptToolStripMenuItem.Text = "Open Geo Script";
+            this.openGeoScriptToolStripMenuItem.Click += new System.EventHandler(this.openGeoScriptToolStripMenuItem_Click);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(180, 341);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Geo";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(6, 304);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(168, 33);
+            this.button4.TabIndex = 26;
+            this.button4.Text = "Export F3D data as OBJ";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // setToolStripMenuItem
+            // 
+            this.setToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gamePathToolStripMenuItem});
+            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.setToolStripMenuItem.Text = "Set";
+            // 
+            // gamePathToolStripMenuItem
+            // 
+            this.gamePathToolStripMenuItem.Name = "gamePathToolStripMenuItem";
+            this.gamePathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.gamePathToolStripMenuItem.Text = "Game folder path";
+            this.gamePathToolStripMenuItem.Click += new System.EventHandler(this.gamePathToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(650, 406);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
@@ -267,6 +392,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "F3D Renderer / LakiTool Alpha";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
@@ -299,5 +425,17 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ToolStripMenuItem openCollisionDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem fixCollisionDataToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.ToolStripMenuItem openGeoScriptToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gamePathToolStripMenuItem;
     }
 }
