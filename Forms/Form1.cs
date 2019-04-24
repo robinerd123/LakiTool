@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows;
 using System.Windows.Forms;
 using LakiTool;
 
@@ -361,6 +362,7 @@ namespace SM64LevelUp
                 fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(LUTc, lines));
             }
             File.WriteAllLines("outfull.obj", fullObj.val());
+            MessageBox.Show("Successfully exported as OBJ, check the folder you have LakiTool inside of.", "Success.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void levelToolStripMenuItem_Click()
