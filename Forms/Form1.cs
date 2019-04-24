@@ -362,7 +362,7 @@ namespace SM64LevelUp
                 fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(LUTc, lines));
             }
             File.WriteAllLines("outfull.obj", fullObj.val());
-            MessageBox.Show("Successfully exported as OBJ, check the folder you have LakiTool inside of.", "Success.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show("Successfully exported as OBJ, check the folder you have LakiTool inside of.", "Success.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void levelToolStripMenuItem_Click()
