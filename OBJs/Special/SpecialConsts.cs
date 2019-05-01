@@ -25,5 +25,6 @@ namespace LakiTool.OBJs.Special
         };
 
         public const string specialItFile = "include/special_presets.h";
+        public const string specialIpFile = "include/special_presets.inc";
     }
 }

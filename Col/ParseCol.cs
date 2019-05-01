@@ -41,9 +41,13 @@ namespace LakiTool.Col
                 {
                     cold.colWaterBox((short)MISCUtils.ParseInt(vals[1]), (short)MISCUtils.ParseInt(vals[2]), (short)MISCUtils.ParseInt(vals[3]), (short)MISCUtils.ParseInt(vals[4]), (short)MISCUtils.ParseInt(vals[5]), (short)MISCUtils.ParseInt(vals[6]));
                 }
-                if (vals[0] == "colTrisInit")
+                if (vals[0] == "colTriInit")
                 {
-                    cold.colTrisInit(LakiTool.Col.Util.ColUtil.getCmdFromName(vals[1]), (short)MISCUtils.ParseInt(vals[2]));
+                    cold.colTriInit(LakiTool.Col.Util.ColUtil.getCmdFromName(vals[1]), (short)MISCUtils.ParseInt(vals[2]));
+                }
+                if (vals[0] == "special_object")
+                {
+                    //stuff from here has been migrated to renderer and to objs and objs/special etc
                 }
             }
         }

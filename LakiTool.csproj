@@ -62,19 +62,33 @@
     <Compile Include="C\CConsts.cs" />
     <Compile Include="C\Utils\CUtils.cs" />
     <Compile Include="C\Utils\GCUtil.cs" />
+    <Compile Include="GBI\DL.cs" />
+    <Compile Include="Geo\GeoCMDs.cs" />
+    <Compile Include="Geo\GeoElem.cs" />
+    <Compile Include="Geo\GeoParams.cs" />
+    <Compile Include="Geo\GeoRefObject.cs" />
+    <Compile Include="Geo\GeoUtil.cs" />
+    <Compile Include="Geo\Node.cs" />
+    <Compile Include="Geo\ParseGeo.cs" />
+    <Compile Include="Geo\Rotation.cs" />
+    <Compile Include="Geo\Scaling.cs" />
+    <Compile Include="Geo\Translation.cs" />
+    <Compile Include="Geo\Util\GeoUtil.cs" />
     <Compile Include="Inc\Macro.cs" />
     <Compile Include="Inc\MacroConsts.cs" />
     <Compile Include="Inc\MacroSet.cs" />
     <Compile Include="Inc\MacroVal.cs" />
     <Compile Include="Inc\MacroWrites.cs" />
     <Compile Include="Inc\Util\MacroUtils.cs" />
-    <Compile Include="LUT\GData.cs" />
-    <Compile Include="LUT\Label.cs" />
-    <Compile Include="LUT\LUTSub.cs" />
-    <Compile Include="LUT\Utils\LabelUtil.cs" />
-    <Compile Include="LUT\Utils\LUTUtil.cs" />
+    <Compile Include="GBI\LUT\GData.cs" />
+    <Compile Include="Labels\Label.cs" />
+    <Compile Include="GBI\LUT\LUTSub.cs" />
+    <Compile Include="Labels\LabelContainer.cs" />
+    <Compile Include="Labels\Util\LabelUtil.cs" />
+    <Compile Include="GBI\LUT\Utils\LUTUtil.cs" />
     <Compile Include="GBI\Utils\GMUtil.cs" />
-    <Compile Include="LUT\LUTs.cs" />
+    <Compile Include="GBI\LUT\LUTs.cs" />
+    <Compile Include="Geo\GeoObject.cs" />
     <Compile Include="Mdl\OBJ\OBJ.cs" />
     <Compile Include="Mdl\OBJ\OBJFile\f.cs" />
     <Compile Include="Mdl\OBJ\OBJFile\fFmt.cs" />
@@ -102,13 +116,30 @@
     <Compile Include="MISC\Game.cs" />
     <Compile Include="MISC\Utils\MISCUtils.cs" />
     <Compile Include="GBI\ParseF3D.cs" />
+    <Compile Include="OBJs\GeneralObjConsts.cs" />
+    <Compile Include="Render\ModelHelper.cs" />
+    <Compile Include="OBJs\RenderStack.cs" />
     <Compile Include="OBJs\Special\Special.cs" />
     <Compile Include="OBJs\Special\SpecialConsts.cs" />
+    <Compile Include="OBJs\Special\SpecialObjectRenderStack.cs" />
     <Compile Include="OBJs\Special\Utils\GSOUtil.cs" />
     <Compile Include="OBJs\Special\Utils\SpecialUtil.cs" />
     <Compile Include="MISC\Program.cs" />
     <Compile Include="MISC\Properties\AssemblyInfo.cs" />
     <Compile Include="GBI\Vertex.cs" />
+    <Compile Include="OBJs\Translation.cs" />
+    <Compile Include="OBJs\Util\CubeData.cs" />
+    <Compile Include="OBJs\Util\CubeDataCont.cs" />
+    <Compile Include="OBJs\Util\OBJMdlUtil.cs" />
+    <Compile Include="OBJs\Util\ObjUtil.cs" />
+    <Compile Include="Render\ColRenderer.cs" />
+    <Compile Include="Render\F3DRenderer.cs" />
+    <Compile Include="Render\GeoRenderer.cs" />
+    <Compile Include="Render\LvlRenderer.cs" />
+    <Compile Include="Render\NamedRenderer.cs" />
+    <Compile Include="Render\Renderer.cs" />
+    <Compile Include="Render\RendererObject.cs" />
+    <Compile Include="Render\RenderStackObject.cs" />
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -142,7 +173,7 @@
     <None Include="MISC\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Geo\Util\" />
+    <Folder Include="Mdl\DAE\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

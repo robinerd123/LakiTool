@@ -52,6 +52,7 @@ namespace LakiTool.C.Utils
             foreach(string line in fileLines)
             {
                 if (parsingStruct) {
+                    if (line[0] == '{') continue;
                     if (line.Contains("{") && line.Contains("}"))
                     {
                         outData.Add(MISCUtils.ParseAsmbd(line.Split('{')[1].Split('}')[0]));

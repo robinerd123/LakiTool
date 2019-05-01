@@ -12,7 +12,7 @@ namespace LakiTool.Col
     {
         List<ColVertex> verteces = new List<ColVertex>();
         byte colorValR, colorValG, colorValB;
-
+        uint boxScale = 1000;
         public void colVertex(short x, short y, short z)
         {
             verteces.Add(new ColVertex(x, y, z));
@@ -46,7 +46,7 @@ namespace LakiTool.Col
             GL.Vertex3(x2 >> 4, y >> 4, z2 >> 4);
         }
 
-        public void colTrisInit(short color, short num)
+        public void colTriInit(short color, short num)
         {
             colorValR = 127;
             colorValG = 127;
@@ -54,6 +54,12 @@ namespace LakiTool.Col
             colorValR += (((color % 8) & 0b100) != 0) ? (byte)127 : (byte)0;
             colorValG += (((color % 8) & 0b10) != 0) ? (byte)0 : (byte)127;
             colorValB += (((color % 8) & 0b1) != 0) ? (byte)127 : (byte)0;
+        }
+
+        public void special_object(short X, short Y, short Z)
+        {
+            GL.End();
+            GL.Begin(BeginMode.Triangles);
         }
     }
 }

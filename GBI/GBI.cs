@@ -10,12 +10,12 @@ using OpenTK.Graphics.OpenGL;
 using System.Threading.Tasks;
 using LakiTool;
 
-namespace LakiTool
+namespace LakiTool.GBI
 {
     class GBI
     {
         public Vtx[] vtxbuffer = new Vtx[81];
-        uint wraps = 0, wrapt = 0;
+        static uint wraps = 0, wrapt = 0;
         int x = 32;
         int y = 32;
         uint geommode = GBIConsts.G_LIGHTING | GBIConsts.G_SHADE;
@@ -60,19 +60,22 @@ namespace LakiTool
             x = data.Width;
             y = data.Height;
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            bitmap.UnlockBits(data);
+            //bitmap.UnlockBits(data);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Linear);
             GL.BindTexture(TextureTarget.Texture2D, id);
             F3DUtils.setUpWrapST(wraps, wrapt);
+            GC.Collect();
             GL.Begin(BeginMode.Triangles);
         }
 
         public void gsDPSetEnvColor(byte r, byte g, byte b, byte a)
         {
             //TODO: make this better
+            GL.End();
             GL.Light(LightName.Light0, LightParameter.Diffuse, new float[] { (float)r / 255f, (float)g / 255f, (float)g / 255f, (float)a / 255f });
             GL.ColorMaterial(MaterialFace.Front, ColorMaterialParameter.Diffuse);
+            GL.Begin(BeginMode.Triangles);
         }
 
         public void gsSPLight(float[] lightcolor, byte type)
@@ -85,6 +88,7 @@ namespace LakiTool
 
         public void gsSPVertex(Vtx[] verteces, byte length, byte start)
         {
+            if (start + length > verteces.Length) length -= (byte)((start + length) - verteces.Length);
             Array.Copy(verteces, 0, vtxbuffer, start, length);
         }
 

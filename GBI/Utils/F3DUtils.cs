@@ -12,6 +12,18 @@ namespace LakiTool
 {
     class F3DUtils
     {
+        public static void renderF3DFromFile(string filePath)
+        {
+            string[] contents = System.IO.File.ReadAllLines(filePath);
+            LUTUtil lutmanager = new LUTUtil();
+            lutmanager.dldata = contents;
+            lutmanager.curFile = filePath;
+            lutmanager.fbpath = LakiTool.MISC.Game.gamePath;
+            lutmanager.initF3D();
+            ParseF3D p = new ParseF3D(contents);
+            p.ParseDL(0, lutmanager.luts);
+        }
+
         public static void setUpVertColor(byte r, byte g, byte b, byte a, uint geommode)
         {
             if ((geommode & GBIConsts.G_SHADE) != 0) //checks if shading is enabled

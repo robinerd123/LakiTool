@@ -12,13 +12,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Windows;
 using System.Windows.Forms;
 using LakiTool;
 
 //apology for the really messy code here itll probably be fixed some day
 
-namespace SM64LevelUp
+namespace LakiTool
 {
     public partial class Form1 : Form
     {
@@ -88,39 +87,14 @@ namespace SM64LevelUp
             lookat.Y = (float)Math.Sin((float)cam.Orientation.Y);
             lookat.Z = (float)(Math.Sin((float)cam.Orientation.X) * Math.Cos((float)cam.Orientation.Y));
             GL.Light(LightName.Light0, LightParameter.Position, new float[] { Math.Abs(lookat.X), Math.Abs(lookat.Y), Math.Abs(lookat.Z), 0.0f });
-            if (radioButton2.Checked)
-            {
-                if (!textured) GL.Disable(EnableCap.Texture2D); else GL.Enable(EnableCap.Texture2D);
-                GL.Begin(BeginMode.Triangles);
-                if (!seq)
-                {
-                    foreach (int torenderitems in torender)
-                    {
-                        GL.Begin(BeginMode.Triangles);
-                        parse.ParseDL(torenderitems, GBIc, LUTc);
-                        GL.End();
-                    }
-                }
-                else
-                {
-                    parse.ParseDL(0, GBIc, LUTc);
-                }
-                GL.End();
-            } else {
-                GL.Disable(EnableCap.Lighting);
-                GL.Disable(EnableCap.Light0);
-                GL.Disable(EnableCap.ColorMaterial);
-                LakiTool.Col.ParseCol parse = new LakiTool.Col.ParseCol(lines);
-                GL.Begin(BeginMode.Triangles);
-                parse.ParseColData();
-                GL.End();
-            }
+
+            renderer.Render();
+
             RenderPanel.SwapBuffers();
         }
-        ParseF3D parse = new ParseF3D(new string[]{"0"});
-        GBI GBIc = new GBI();
-        LUTs LUTc = new LUTs();
-        LUTUtil lutmanager = new LUTUtil();
+
+        LakiTool.Render.Renderer renderer = new LakiTool.Render.Renderer();
+
         public static void InitialiseView()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -164,8 +138,6 @@ namespace SM64LevelUp
             Render(new Rectangle(new Point(0, 0), new Size(432, 324)), 320, 240, glcontrol1);
         }
 
-        string[] lines = new string[0];
-
         private void openLevelFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog loadobj = new OpenFileDialog();
@@ -177,16 +149,16 @@ namespace SM64LevelUp
                 radioButton1.Enabled = false;
                 checkedListBox1.Items.Clear();
                 listBox1.Items.Clear();
-                lines = File.ReadAllLines(loadobj.FileName);
+                renderer.rendererObject.F3Drenderer.lines = File.ReadAllLines(loadobj.FileName);
                 int n = 0;
-                string fname = "";
-                foreach (string line in lines)
+                renderer.rendererObject.F3Drenderer.fileName = loadobj.FileName;
+                foreach (string line in renderer.rendererObject.F3Drenderer.lines)
                 {
                     string[] vs = MISCUtils.ParseAsmbd(line);
                     int k = 2;
                     if (vs[0] == "gsSPDisplayList")
                     {
-                        foreach (string l in lines)
+                        foreach (string l in renderer.rendererObject.F3Drenderer.lines)
                         {
                             if (l.Contains(vs[1]))
                             {
@@ -204,19 +176,16 @@ namespace SM64LevelUp
                 }
                 f3d = true;
                 timer1.Enabled = true;
-                lutmanager.dldata = lines;
-                lutmanager.curFile = loadobj.FileName;
-                lutmanager.fbpath = LakiTool.MISC.Game.gamePath;
-                lutmanager.initF3D();
-                LUTc = lutmanager.luts;
-                parse = new ParseF3D(lines);
+                renderer.rendererObject.F3Drenderer.manualRendering = true;
+                renderer.SetRenderMode(LakiTool.Render.RenderMode.F3D);
+                renderer.initRenderer();
                 button2.PerformClick();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 edititem = new Form2(LUTc, listBox1.GetItemText(listBox1.SelectedItem), comboBox1.GetItemText(comboBox1.SelectedItem)[0]);
+            Form2 edititem = new Form2(renderer.rendererObject.F3Drenderer.LUTc, listBox1.GetItemText(listBox1.SelectedItem), comboBox1.GetItemText(comboBox1.SelectedItem)[0]);
             edititem.ShowDialog();
             /*
             string fp = "placeholder.png";
@@ -240,13 +209,12 @@ namespace SM64LevelUp
             vertcolor ^= true;
         }
 
-        List<int> torender = new List<int>();
         private void changerender(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            torender = new List<int>();
+            renderer.rendererObject.F3Drenderer.torender = new List<int>();
             foreach (string itemschecked in checkedListBox1.CheckedItems)
             {
-                torender.Add(int.Parse(MISCUtils.ParseAsmbd(itemschecked)[0]));
+                renderer.rendererObject.F3Drenderer.torender.Add(int.Parse(MISCUtils.ParseAsmbd(itemschecked)[0]));
             }
         }
         
@@ -270,20 +238,20 @@ namespace SM64LevelUp
             button2.Text = !unc ? "C" +button2.Text.Substring(3):"Unc" + button2.Text.Substring(1);
             changerender(new object(), new System.Windows.Forms.MouseEventArgs(MouseButtons.Left,0,0,0,0));
         }
-        bool seq = false;
+
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            seq ^= true;
+            renderer.rendererObject.F3Drenderer.seq ^= true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             cam.Position = Vector3.Zero;
         }
-        bool textured = true;
+
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            textured ^= true;
+            renderer.rendererObject.F3Drenderer.textured ^= true;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -298,15 +266,15 @@ namespace SM64LevelUp
             {
                 case 0:
                     //textures
-                    listBox1 = lutmanager.getListBoxFromTextures(listBox1);
+                    listBox1 = renderer.rendererObject.F3Drenderer.lutmanager.getListBoxFromTextures(listBox1);
                     break;
                 case 1:
                     //verteces
-                    listBox1 = lutmanager.getListBoxFromVerteces(listBox1);
+                    listBox1 = renderer.rendererObject.F3Drenderer.lutmanager.getListBoxFromVerteces(listBox1);
                     break;
                 case 2:
                     //lights
-                    listBox1 = lutmanager.getListBoxFromLights(listBox1);
+                    listBox1 = renderer.rendererObject.F3Drenderer.lutmanager.getListBoxFromLights(listBox1);
                     break;
             }
             button1.Enabled = false;
@@ -340,7 +308,9 @@ namespace SM64LevelUp
             {
                 radioButton1.Checked = true;
                 radioButton2.Enabled = false;
-                lines = File.ReadAllLines(loadobj.FileName);
+                renderer.rendererObject.Georenderer.lines = File.ReadAllLines(loadobj.FileName);
+                renderer.SetRenderMode(LakiTool.Render.RenderMode.Geo);
+                renderer.initRenderer();
                 checkedListBox1.Items.Clear();
                 listBox1.Items.Clear();
                 timer1.Enabled = true;
@@ -350,16 +320,16 @@ namespace SM64LevelUp
         private void button4_Click(object sender, EventArgs e)
         {
             LakiTool.Mdl.OBJ.OBJ fullObj = new LakiTool.Mdl.OBJ.OBJ();
-            if (!seq)
+            if (!renderer.rendererObject.F3Drenderer.seq)
             {
-                foreach (int torenderitems in torender)
+                foreach (int torenderitems in renderer.rendererObject.F3Drenderer.torender)
                 {
-                    fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(LUTc, lines, torenderitems, lines[torenderitems-2].Replace("glabel ", "").Replace(":", "").Split()[0]));
+                    fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(renderer.rendererObject.F3Drenderer.LUTc, renderer.rendererObject.F3Drenderer.lines, torenderitems, renderer.rendererObject.F3Drenderer.lines[torenderitems-2].Replace("glabel ", "").Replace(":", "").Split()[0]));
                 }
             }
             else
             {
-                fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(LUTc, lines));
+                fullObj.objects.Add(LakiTool.Mdl.OBJ.Utils.OBJFileUtil.getObjFromDL(renderer.rendererObject.F3Drenderer.LUTc, renderer.rendererObject.F3Drenderer.lines));
             }
             File.WriteAllLines("outfull.obj", fullObj.val());
             MessageBox.Show("Successfully exported as OBJ, check the folder you have LakiTool inside of.", "Success.", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -377,6 +347,8 @@ namespace SM64LevelUp
                 levelToolStripMenuItem.Enabled = true;
                 LakiTool.MISC.Game.gamePath = Environment.GetEnvironmentVariable("sm64gamepath", EnvironmentVariableTarget.User);
             }
+
+            //Clipboard.SetText(LakiTool.Geo.Util.GeoUtil.getLinesFromGeo(LakiTool.Geo.Util.GeoUtil.getGeoFromLines(File.ReadAllLines(@"C:\Users\RobiNDER\Downloads\sm64_source-master (6)\sm64_source-master\actors\goomba\geo.s"))));
         }
 
         private void gamePathToolStripMenuItem_Click(object sender, EventArgs e)
@@ -398,7 +370,9 @@ namespace SM64LevelUp
             {
                 radioButton1.Checked = true;
                 radioButton2.Enabled = false;
-                lines = File.ReadAllLines(loadobj.FileName);
+                renderer.rendererObject.Colrenderer.lines = File.ReadAllLines(loadobj.FileName);
+                renderer.SetRenderMode(LakiTool.Render.RenderMode.Collision);
+                renderer.initRenderer();
                 checkedListBox1.Items.Clear();
                 listBox1.Items.Clear();
                 timer1.Enabled = true;

@@ -1,4 +1,4 @@
-﻿namespace SM64LevelUp
+﻿namespace LakiTool
 {
     partial class Form1
     {
@@ -33,37 +33,42 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLevelFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCollisionDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGeoScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.fixCollisionDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gamePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.openCollisionDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.fixCollisionDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.openGeoScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.button4 = new System.Windows.Forms.Button();
-            this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gamePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // glcontrol1
@@ -107,9 +112,50 @@
             // openLevelFolderToolStripMenuItem
             // 
             this.openLevelFolderToolStripMenuItem.Name = "openLevelFolderToolStripMenuItem";
-            this.openLevelFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openLevelFolderToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openLevelFolderToolStripMenuItem.Text = "Open DL data";
             this.openLevelFolderToolStripMenuItem.Click += new System.EventHandler(this.openLevelFolderToolStripMenuItem_Click);
+            // 
+            // openCollisionDataToolStripMenuItem
+            // 
+            this.openCollisionDataToolStripMenuItem.Name = "openCollisionDataToolStripMenuItem";
+            this.openCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.openCollisionDataToolStripMenuItem.Text = "Open collision data";
+            this.openCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.openCollisionDataToolStripMenuItem_Click);
+            // 
+            // openGeoScriptToolStripMenuItem
+            // 
+            this.openGeoScriptToolStripMenuItem.Name = "openGeoScriptToolStripMenuItem";
+            this.openGeoScriptToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.openGeoScriptToolStripMenuItem.Text = "Open Geo Script";
+            this.openGeoScriptToolStripMenuItem.Click += new System.EventHandler(this.openGeoScriptToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
+            // 
+            // fixCollisionDataToolStripMenuItem
+            // 
+            this.fixCollisionDataToolStripMenuItem.Name = "fixCollisionDataToolStripMenuItem";
+            this.fixCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.fixCollisionDataToolStripMenuItem.Text = "Fix collision data";
+            this.fixCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.fixCollisionDataToolStripMenuItem_Click);
+            // 
+            // setToolStripMenuItem
+            // 
+            this.setToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gamePathToolStripMenuItem});
+            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.setToolStripMenuItem.Text = "Set";
+            // 
+            // gamePathToolStripMenuItem
+            // 
+            this.gamePathToolStripMenuItem.Name = "gamePathToolStripMenuItem";
+            this.gamePathToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.gamePathToolStripMenuItem.Text = "Game folder path";
+            this.gamePathToolStripMenuItem.Click += new System.EventHandler(this.gamePathToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -165,6 +211,16 @@
             this.tabPage1.Text = "Model";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(6, 304);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(168, 33);
+            this.button4.TabIndex = 26;
+            this.button4.Text = "Export F3D data as OBJ";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // comboBox1
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -178,19 +234,6 @@
             this.comboBox1.Size = new System.Drawing.Size(168, 21);
             this.comboBox1.TabIndex = 25;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(206, 386);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(68, 17);
-            this.checkBox3.TabIndex = 24;
-            this.checkBox3.Text = "Textured";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -242,6 +285,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button6);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.comboBox2);
+            this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -249,6 +296,73 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Level";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(115, 281);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(42, 21);
+            this.button6.TabIndex = 3;
+            this.button6.Text = "Info";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 284);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Module";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(54, 281);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(120, 21);
+            this.comboBox2.TabIndex = 1;
+            this.comboBox2.Text = "Modconf";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(6, 308);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(168, 30);
+            this.button5.TabIndex = 0;
+            this.button5.Text = "Import level";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(180, 341);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Objects";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(180, 341);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Geo";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(206, 386);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(68, 17);
+            this.checkBox3.TabIndex = 24;
+            this.checkBox3.Text = "Textured";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // button3
             // 
@@ -268,34 +382,6 @@
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "0 FPS";
-            // 
-            // openCollisionDataToolStripMenuItem
-            // 
-            this.openCollisionDataToolStripMenuItem.Name = "openCollisionDataToolStripMenuItem";
-            this.openCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openCollisionDataToolStripMenuItem.Text = "Open collision data";
-            this.openCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.openCollisionDataToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // fixCollisionDataToolStripMenuItem
-            // 
-            this.fixCollisionDataToolStripMenuItem.Name = "fixCollisionDataToolStripMenuItem";
-            this.fixCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fixCollisionDataToolStripMenuItem.Text = "Fix collision data";
-            this.fixCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.fixCollisionDataToolStripMenuItem_Click);
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(180, 341);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Objects";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -329,47 +415,6 @@
             this.radioButton2.Text = "Display List(s)";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
-            // openGeoScriptToolStripMenuItem
-            // 
-            this.openGeoScriptToolStripMenuItem.Name = "openGeoScriptToolStripMenuItem";
-            this.openGeoScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openGeoScriptToolStripMenuItem.Text = "Open Geo Script";
-            this.openGeoScriptToolStripMenuItem.Click += new System.EventHandler(this.openGeoScriptToolStripMenuItem_Click);
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(180, 341);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Geo";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(6, 304);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(168, 33);
-            this.button4.TabIndex = 26;
-            this.button4.Text = "Export F3D data as OBJ";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // setToolStripMenuItem
-            // 
-            this.setToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.gamePathToolStripMenuItem});
-            this.setToolStripMenuItem.Name = "setToolStripMenuItem";
-            this.setToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
-            this.setToolStripMenuItem.Text = "Set";
-            // 
-            // gamePathToolStripMenuItem
-            // 
-            this.gamePathToolStripMenuItem.Name = "gamePathToolStripMenuItem";
-            this.gamePathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.gamePathToolStripMenuItem.Text = "Game folder path";
-            this.gamePathToolStripMenuItem.Click += new System.EventHandler(this.gamePathToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,7 +436,7 @@
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "F3D Renderer / LakiTool Alpha";
+            this.Text = "LakiTool Alpha";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -399,6 +444,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -437,5 +484,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gamePathToolStripMenuItem;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button5;
     }
 }

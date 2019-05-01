@@ -12,7 +12,7 @@ namespace LakiTool.Col
                         "colInit",
                         "colVertexInit",
                         "colVertex",
-                        "colTrisInit",
+                        "colTriInit",
                         "colTri",
                         "colTriSpecial",
                         "colTriStop",

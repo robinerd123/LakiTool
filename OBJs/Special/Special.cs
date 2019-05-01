@@ -13,5 +13,11 @@ namespace LakiTool.OBJs.Special
         public byte defParam;  // Default parameter, only used when type is SPTYPE_DEF_PARAM_AND_YROT
         public string modelName;
         public string behaviorName;
+
+        public string GeoName()
+        {
+            //System.Windows.Forms.MessageBox.Show(modelName);
+            return OBJs.Util.ObjUtil.getGeoNameFromModelName(modelName);
+        }
     }
 }
