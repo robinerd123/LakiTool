@@ -12,8 +12,18 @@
 - Fast3D Tile wraps/wrapt
 - Other minor F3D stuff
 
+##### Collision Viewer
+- Collision model data support
+- Fake collision normals
+- Surface types auto coloring
+- Render special objects (trees, doors, etc)
+- Water boxes
+
 ##### Geo decoding
-- Coming soon
+- F3D rendering from collision (needs some performance fixes)
+- Rotation (needs some minor fixing in Geo/GeoUtil for nodes to work properly)
+- Translation (needs some minor fixing in Geo/GeoUtil for nodes to work properly)
+- Scaling (needs some minor fixing in Geo/GeoUtil for nodes to work properly)
 
 ##### Level script decoding
 - Coming soon
