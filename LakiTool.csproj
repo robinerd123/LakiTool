@@ -63,6 +63,9 @@
     <Compile Include="C\Utils\CUtils.cs" />
     <Compile Include="C\Utils\GCUtil.cs" />
     <Compile Include="GBI\DL.cs" />
+    <Compile Include="GBI\F3DCommand.cs" />
+    <Compile Include="GBI\F3DParam.cs" />
+    <Compile Include="GBI\Utils\LSUtil.cs" />
     <Compile Include="Geo\GeoCMDs.cs" />
     <Compile Include="Geo\GeoElem.cs" />
     <Compile Include="Geo\GeoParams.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="GBI\Utils\GMUtil.cs" />
     <Compile Include="GBI\LUT\LUTs.cs" />
     <Compile Include="Geo\GeoObject.cs" />
+    <Compile Include="Lvl\LevelScript.cs" />
     <Compile Include="Mdl\OBJ\OBJ.cs" />
     <Compile Include="Mdl\OBJ\OBJFile\f.cs" />
     <Compile Include="Mdl\OBJ\OBJFile\fFmt.cs" />
@@ -116,6 +120,7 @@
     <Compile Include="MISC\Game.cs" />
     <Compile Include="MISC\Utils\MISCUtils.cs" />
     <Compile Include="GBI\ParseF3D.cs" />
+    <Compile Include="OBJs\CubeVertex.cs" />
     <Compile Include="OBJs\GeneralObjConsts.cs" />
     <Compile Include="Render\ModelHelper.cs" />
     <Compile Include="OBJs\RenderStack.cs" />
@@ -128,9 +133,8 @@
     <Compile Include="MISC\Properties\AssemblyInfo.cs" />
     <Compile Include="GBI\Vertex.cs" />
     <Compile Include="OBJs\Translation.cs" />
-    <Compile Include="OBJs\Util\CubeData.cs" />
-    <Compile Include="OBJs\Util\CubeDataCont.cs" />
-    <Compile Include="OBJs\Util\OBJMdlUtil.cs" />
+    <Compile Include="OBJs\CubeData.cs" />
+    <Compile Include="OBJs\CubeDataCont.cs" />
     <Compile Include="OBJs\Util\ObjUtil.cs" />
     <Compile Include="Render\ColRenderer.cs" />
     <Compile Include="Render\F3DRenderer.cs" />

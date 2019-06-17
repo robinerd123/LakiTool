@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Graphics.OpenGL;
 
 namespace LakiTool.Render
 {
@@ -37,7 +38,18 @@ namespace LakiTool.Render
             if (!inited) return;
             foreach (Geo.GeoObject geoObject in geoObjects)
             {
-                geoObject.Render();
+                switch (geoObject.objType)
+                {
+                    case Geo.GeoObjectTypes.PushMatrix:
+                        //GL.PushMatrix();
+                        break;
+                    case Geo.GeoObjectTypes.RenderObject:
+                        geoObject.Render();
+                        break;
+                    case Geo.GeoObjectTypes.PopMatrix:
+                        //GL.PopMatrix();
+                        break;
+                }
             }
         }
     }

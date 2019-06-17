@@ -8,22 +8,37 @@ using OpenTK;
 
 namespace LakiTool.Geo
 {
+    enum GeoObjectTypes
+    {
+        PushMatrix,
+        PopMatrix,
+        RenderObject
+    }
+
     class GeoObject
     {
         public Geo.Rotation objRot = new Geo.Rotation();
         public Geo.Translation objTrans = new Geo.Translation();
         public Geo.Scaling objScale = new Geo.Scaling();
         public Render.F3DRenderer f3d = new Render.F3DRenderer();
+        public GeoObjectTypes objType;
 
         bool f3Dinited = false;
 
+        public GeoObject(GeoObjectTypes objectType)
+        {
+            objType = objectType;
+        }
+
         public void Render()
         {
+            SetScaling(objScale);
+            GL.PushMatrix();
             SetRotation(objRot);
             SetTranslation(objTrans);
-            SetScaling(objScale);
             if (!f3Dinited) { f3d.Init(); f3Dinited = true; }
             f3d.Render();
+            GL.PopMatrix();
         }
         
         private void SetRotation(Geo.Rotation rotObj)

@@ -7,10 +7,18 @@ using OpenTK.Graphics.OpenGL;
 
 namespace LakiTool.Render
 {
+    enum ColMode
+    {
+        Full,
+        OnlySpecial
+    }
+
     class ColRenderer
     {
         private bool inited = false;
 
+        public ColMode colMode = ColMode.Full;
+        
         public string[] lines = new string[0];
         LakiTool.Col.ParseCol parse;
         OBJs.Special.SpecialObjectRenderStack specialObjects = new OBJs.Special.SpecialObjectRenderStack();
@@ -29,10 +37,13 @@ namespace LakiTool.Render
         {
             if (!inited) return;
             GL.Disable(EnableCap.Texture2D);
-            GL.Begin(BeginMode.Triangles);
-            parse.ParseColData();
+            if (colMode == ColMode.Full)
+            {
+                GL.Begin(BeginMode.Triangles);
+                parse.ParseColData();
+                GL.End();
+            }
             specialObjects.Render();
-            GL.End();
         }
     }
 }

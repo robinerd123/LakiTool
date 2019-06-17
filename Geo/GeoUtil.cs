@@ -32,7 +32,7 @@ namespace LakiTool.Geo
         {
             List<GeoObject> geoObjects = new List<GeoObject>();
             GeoObject curObject;
-            if (prevObject == null) curObject = new GeoObject(); else curObject = prevObject;
+            if (prevObject == null) curObject = new GeoObject(GeoObjectTypes.RenderObject); else curObject = prevObject;
 
             foreach (GeoElem geoElem in geoElems)
             {
@@ -44,18 +44,18 @@ namespace LakiTool.Geo
                         if (name[1] != labelName) continue;
                     }
                 }
-
-                //if (geoElem.type == GeoType.ListCloser) curObject = new GeoObject();
+                if (geoElem.type == GeoType.ListCloser) geoObjects.Add(new GeoObject(GeoObjectTypes.PopMatrix));
                 GeoCMDs CMD = new GeoCMDs();
                 CMD.elem = geoElem;
                 curObject = CMD.loadGeoObject(CMD.getRefObject(), curObject);
                 if (curObject.f3d.fileName != null)
                 {
                     geoObjects.Add(curObject);
-                    curObject = new GeoObject(); //to be removed
+                    curObject = new GeoObject(GeoObjectTypes.RenderObject);
                 }
                 if (geoElem.type == GeoType.ListOpener)
                 {
+                    geoObjects.Add(new GeoObject(GeoObjectTypes.PushMatrix));
                     geoObjects.AddRange(GetGeoObjectsFromGeoElems(geoElem.geoElems, labelName, curObject));
                 }
             }

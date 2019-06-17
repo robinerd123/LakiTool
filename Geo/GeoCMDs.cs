@@ -32,29 +32,29 @@ namespace LakiTool.Geo
                 if (refObject.hasReturnMode(GeoReturnModes.Translation) && refObject.hasReturnMode(GeoReturnModes.Rotation))
                 {
                     //geo translation and rotation
-                    returnObject.objTrans.xTrans += (short)elem.geoParams[1].GetVal();
-                    returnObject.objTrans.yTrans += (short)elem.geoParams[2].GetVal();
-                    returnObject.objTrans.zTrans += (short)elem.geoParams[3].GetVal();
+                    returnObject.objTrans.xTrans = (short)elem.geoParams[1].GetVal();
+                    returnObject.objTrans.yTrans = (short)elem.geoParams[2].GetVal();
+                    returnObject.objTrans.zTrans = (short)elem.geoParams[3].GetVal();
 
-                    returnObject.objRot.xRot += (short)elem.geoParams[4].GetVal();
-                    returnObject.objRot.yRot += (short)elem.geoParams[5].GetVal();
-                    returnObject.objRot.zRot += (short)elem.geoParams[6].GetVal();
+                    returnObject.objRot.xRot = (short)elem.geoParams[4].GetVal();
+                    returnObject.objRot.yRot = (short)elem.geoParams[5].GetVal();
+                    returnObject.objRot.zRot = (short)elem.geoParams[6].GetVal();
                 }
                 else
                 {
                     if (refObject.hasReturnMode(GeoReturnModes.Translation))
                     {
                         //geo translation
-                        returnObject.objTrans.xTrans += (short)elem.geoParams[1].GetVal();
-                        returnObject.objTrans.yTrans += (short)elem.geoParams[2].GetVal();
-                        returnObject.objTrans.zTrans += (short)elem.geoParams[3].GetVal();
+                        returnObject.objTrans.xTrans = (short)elem.geoParams[1].GetVal();
+                        returnObject.objTrans.yTrans = (short)elem.geoParams[2].GetVal();
+                        returnObject.objTrans.zTrans = (short)elem.geoParams[3].GetVal();
                     }
                     if (refObject.hasReturnMode(GeoReturnModes.Rotation))
                     {
                         //geo rotation
-                        returnObject.objRot.xRot += (short)elem.geoParams[1].GetVal();
-                        returnObject.objRot.yRot += (short)elem.geoParams[2].GetVal();
-                        returnObject.objRot.zRot += (short)elem.geoParams[3].GetVal();
+                        returnObject.objRot.xRot = (short)elem.geoParams[1].GetVal();
+                        returnObject.objRot.yRot = (short)elem.geoParams[2].GetVal();
+                        returnObject.objRot.zRot = (short)elem.geoParams[3].GetVal();
                     }
                 }
             }
@@ -77,6 +77,7 @@ namespace LakiTool.Geo
                 case "geo_dl_translated":
                 case "geo_translate":
                 case "geo_translate_node":
+                case "geo_todo_11":
                     returnRefObject.Set(GeoReturnModes.Translation);
                     if (elem.geoParams.Count == StandardGeoDLsz) returnRefObject.Set(GeoReturnModes.GeoDL);
                     break;

@@ -24,6 +24,16 @@ namespace LakiTool
             }
         }
 
+        public static bool IsParsableInt(string c)
+        {
+            if(c.Length > 1)
+            {
+                if (c[1] == 'x') c = c.Substring(2);
+            }
+            if (c[0] == '|') return false;
+            return int.TryParse(c, out int e);
+        }
+
         static public string[] ParseAsmbd(string line)
         {
             return System.Text.RegularExpressions.Regex.Replace(line.Replace(",", ""), @"\s+", " ").Split(' ');

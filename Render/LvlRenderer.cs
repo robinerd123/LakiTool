@@ -9,11 +9,15 @@ namespace LakiTool.Render
     class LvlRenderer
     {
         private bool inited = false;
+        //private Lvl.LevelScript levelScript = new Lvl.LevelScript();
 
         public void Init()
         {
             inited = true;
-            //still need to add shit here
+            //levelScript.specialObjects.rendererObject.Colrenderer.lines = System.IO.File.ReadAllLines(loadobj.FileName);
+            //levelScript.specialObjects.SetRenderMode(LakiTool.Render.RenderMode.Collision);
+            //levelScript.specialObjects.rendererObject.Colrenderer.colMode = ColMode.OnlySpecial;
+            //levelScript.specialObjects.initRenderer();
         }
 
         public void Render()

@@ -11,19 +11,17 @@ namespace LakiTool.Render
     class F3DRenderer
     {
         private bool inited = false;
-
-        public bool textured = true;
+        
         public bool seq = false;
-        public bool manualRendering = false;
-
+        
         public string fileName = null;
         public string[] lines = new string[0];
-        public uint startLine;
+        public int startCommand;
         public ParseF3D parser;
         public LUTs LUTc = new LUTs();
         public LUTUtil lutmanager = new LUTUtil();
         public List<int> torender = new List<int>();
-        public List<Labels.Label> f3dlabels = new List<Labels.Label>();
+        public List<GBI.Utils.LSUtil> labelsearchers = new List<GBI.Utils.LSUtil>();
 
         public void SetInitialDataFromLabelName(string labelname)
         {
@@ -32,7 +30,7 @@ namespace LakiTool.Render
             if (f3dlabel.labelFound) {
                 fileName = f3dlabel.labelFile;
                 lines = System.IO.File.ReadAllLines(f3dlabel.labelFile);
-                startLine = f3dlabel.labelLine;
+                startCommand = F3DUtils.getIndexFromLineData(f3dlabel.labelLine, lines);
             }
         }
 
@@ -44,34 +42,21 @@ namespace LakiTool.Render
             lutmanager.fbpath = LakiTool.MISC.Game.gamePath;
             lutmanager.initF3D();
             LUTc = lutmanager.luts;
-            parser = new ParseF3D(lines, lutmanager.jumpContainer);
-            f3dlabels = Labels.Utils.LabelUtil.getLabelListFromModelFile(fileName);
+            parser = new ParseF3D(F3DUtils.getF3DCommandsFromLines(lines), lutmanager.jumpContainer);
+            labelsearchers = F3DUtils.getLabelSearchersFromLabelContainer(new Labels.LabelContainer(Labels.Utils.LabelUtil.getLabelListFromModelFile(fileName)), lines);
         }
 
         public void Render()
         {
             if (!inited) return;
-            if (!textured) GL.Disable(EnableCap.Texture2D); else GL.Enable(EnableCap.Texture2D);
             GL.Begin(BeginMode.Triangles);
-            if (!manualRendering)
+            if (!seq)
             {
-                parser.ParseDL(startLine, LUTc, SpecialRendering.Off, f3dlabels);
+                parser.ParseDL(startCommand, LUTc, SpecialRendering.Off, labelsearchers);
             }
             else
             {
-                if (!seq)
-                {
-                    foreach (int torenderitems in torender)
-                    {
-                        GL.Begin(BeginMode.Triangles);
-                        parser.ParseDL((uint)torenderitems, LUTc, SpecialRendering.SkipJumps);
-                        GL.End();
-                    }
-                }
-                else
-                {
-                    parser.ParseDL(0, LUTc, SpecialRendering.SkipJumps);
-                }
+                parser.ParseDL(0, LUTc, SpecialRendering.SEQ);
             }
             GL.End();
         }

@@ -39,7 +39,7 @@ namespace LakiTool
                     VtxLUT vl = new VtxLUT();
                     int[] vert = new int[9];
                     string[] cs = new string[0];
-                    vl.vtxSubData.label = LakiTool.Labels.Utils.LabelUtil.findLabelFromName(vals[1], curFile);
+                    vl.vtxSubData.label = LakiTool.Labels.Utils.LabelUtil.findLabelFromName(vals[1], curFile, fbpath, true, true);
                     vl.vtxSubData.gData.GFile = curFile;
                     vl.vtxSubData.gData.GLine = (uint)n + 1;
                     uint l = vl.vtxSubData.label.labelLine;
@@ -70,13 +70,14 @@ namespace LakiTool
                 if (vals[0] == "gsSPLight")
                 {
                     LightLUT ll = new LightLUT();
-                    ll.lightSubData.label = LakiTool.Labels.Utils.LabelUtil.findLabelFromName(vals[1], curFile);
+                    ll.lightSubData.label = LakiTool.Labels.Utils.LabelUtil.findLabelFromName(vals[1], curFile, fbpath, true, true);
                     ll.lightSubData.gData.GFile = curFile;
                     ll.lightSubData.gData.GLine = (uint)n + 1;
+                    string[] lelems = MISCUtils.ParseAsmbd(dldata[ll.lightSubData.label.labelLine]);
                     float[] light = new float[4];
-                    for (int v = 0; v < light.Length; v++)
+                    for (int v = 0; v < light.Length - 1; v++)
                     {
-                        string c = MISCUtils.ParseAsmbd(dldata[ll.lightSubData.label.labelLine])[v + 1];
+                        string c = lelems[v+1];
                         light[v] = (float)MISCUtils.ParseInt(c) / 255f;
                     }
                     ll.col = light;
@@ -84,14 +85,10 @@ namespace LakiTool
                     ll.rawLightData = dldata[ll.lightSubData.label.labelLine];
                     luts.lightLUT.Add(ll);
                 }
-                if (vals[0] == "gsSPDisplayList"&&specialRendering!=SpecialRendering.SkipJumps)
-                {
-
-                }
-                if (vals[0] == "gsDPSetTextureImage")
+                if (vals[0] == "gsDPSetTextureImage" || vals[0] == "gsDPLoadTextureBlock")
                 {
                     TexLUT tl = new TexLUT();
-                    tl.texSubData.label = LakiTool.Labels.Utils.LabelUtil.findLabelFromName(vals[4], curFile, fbpath, true);
+                    tl.texSubData.label = LakiTool.Labels.Utils.LabelUtil.findLabelFromName(vals[vals[0][4]=='S'?4:1], curFile, fbpath, true, true);
                     tl.texSubData.gData.GFile = curFile;
                     tl.texSubData.gData.GLine = (uint)n + 1;
                     if (tl.texSubData.label.labelFound)

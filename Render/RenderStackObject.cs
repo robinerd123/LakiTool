@@ -15,8 +15,8 @@ namespace LakiTool.Render
             objTranslation = tObj;
         }
 
-        Renderer renderer = new Renderer();
-        Obj.Translation objTranslation;
+        public Renderer renderer = new Renderer();
+        public Obj.Translation objTranslation;
 
         public void Render()
         {

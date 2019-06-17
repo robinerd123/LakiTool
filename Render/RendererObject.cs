@@ -50,9 +50,9 @@ namespace LakiTool.Render
             }
         }
 
-        public F3DRenderer F3Drenderer = new F3DRenderer();
-        public ColRenderer Colrenderer = new ColRenderer();
-        public GeoRenderer Georenderer = new GeoRenderer();
-        public LvlRenderer Lvlrenderer = new LvlRenderer();
+        public F3DRenderer F3Drenderer;
+        public ColRenderer Colrenderer;
+        public GeoRenderer Georenderer;
+        public LvlRenderer Lvlrenderer;
     }
 }

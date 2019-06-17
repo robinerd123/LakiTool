@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Graphics.OpenGL;
 
 namespace LakiTool.Render
 {
@@ -22,6 +23,22 @@ namespace LakiTool.Render
         public void SetRenderMode(RenderMode renderMode)
         {
             mode = renderMode;
+
+            switch (mode)
+            {
+                case RenderMode.F3D:
+                    rendererObject.F3Drenderer = new F3DRenderer();
+                    break;
+                case RenderMode.Collision:
+                    rendererObject.Colrenderer = new ColRenderer();
+                    break;
+                case RenderMode.Geo:
+                    rendererObject.Georenderer = new GeoRenderer();
+                    break;
+                case RenderMode.Level:
+                    rendererObject.Lvlrenderer = new LvlRenderer();
+                    break;
+            }
         }
 
         public void initRenderer()
@@ -31,6 +48,7 @@ namespace LakiTool.Render
 
         public void Render()
         {
+            GL.Color3(1.0f, 1.0f, 1.0f); //reset color to white
             F3DUtils.setUpWrapST(0, 0); //reset wrap data
             rendererObject.Render();
         }

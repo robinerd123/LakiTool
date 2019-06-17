@@ -8,7 +8,7 @@ namespace LakiTool.Labels
 {
     class LabelContainer
     {
-        public List<Label> labels = new List<Label>();
+        public List<Label> labels;
 
         public Label findLabelFromName(string name)
         {
@@ -17,6 +17,16 @@ namespace LakiTool.Labels
                 if (label.labelName == name) return label;
             }
             return null;
+        }
+
+        public LabelContainer()
+        {
+            labels = new List<Label>();
+        }
+
+        public LabelContainer(List<Label> inputlabels)
+        {
+            labels = inputlabels;
         }
     }
 }
