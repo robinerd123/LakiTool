@@ -13,8 +13,8 @@ namespace LakiTool
     {
         public Vector3 Position = Vector3.Zero;
         public Vector3 Orientation = new Vector3((float)Math.PI, 0f, 0f);
-        public float MoveSpeed = 0f;
-        public float MouseSensitivity = 0.0001f;
+
+        public float MouseSensitivity = 0.002f;
         public Matrix4 GetViewMatrix()
         {
             Vector3 lookat = new Vector3();
@@ -35,9 +35,6 @@ namespace LakiTool
             offset += x * right;
             offset += y * forward;
             offset.Y += z;
-
-            offset.NormalizeFast();
-            offset = Vector3.Multiply(offset, MoveSpeed);
 
             Position += offset;
         }
