@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using LakiTool;
+using System.Diagnostics;
 
 namespace LakiTool
 {
@@ -38,32 +39,22 @@ namespace LakiTool
             GL.Enable(EnableCap.Texture2D);
         }
 
-        bool mic = false;
-
-
-
-        private void doRenderStuff(object sender, EventArgs e)
+        private void doRenderStuff(float deltaTime)
         {
-            if (this.ContainsFocus)
-            {
-                checkkeys();
-                if (Mouse.GetState().LeftButton == OpenTK.Input.ButtonState.Pressed && mic)
-                {
-                    checkmouse();
-                }
-            }
+            checkkeys(deltaTime);
+            checkmouse();
 
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-            Render(new Rectangle(new Point(0, 0), new Size(432, 324)), 432, 324, glcontrol1);
-            stopwatch.Stop();
-            label1.Text = (1000f / (float)stopwatch.ElapsedMilliseconds).ToString() + " FPS";
+            Render(glcontrol1);
+
+            ProcessTimer();
         }
 
-        public void Render(Rectangle ClientRectangle, int Width, int Height, GLControl RenderPanel)
+        public void Render(GLControl RenderPanel)
         {
-            GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
-            Matrix4 projection = cam.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.0f, Width / (float)Height, 1f, 1000.0f);
+            Rectangle renderRect = RenderPanel.ClientRectangle;
+
+            GL.Viewport(renderRect.X, renderRect.Y, renderRect.Width, renderRect.Height);
+            Matrix4 projection = cam.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.0f, renderRect.Width / (float)renderRect.Height, 1f, 1000.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
             InitialiseView();
@@ -106,37 +97,6 @@ namespace LakiTool
             GL.AlphaFunc(AlphaFunction.Gequal, 0.05f);
         }
 
-        private void checkkeys()
-        {
-            KeyboardState state = Keyboard.GetState();
-            cam.MoveSpeed = (float)(trackBar1.Value+1);
-            if (state[Key.Plus]) cam.MoveSpeed+= 1f;
-            if (state[Key.Minus]) cam.MoveSpeed -= 1f;
-            if (cam.MoveSpeed < 1f)
-            {
-                cam.MoveSpeed = 1f;
-            }else if(cam.MoveSpeed > 10f){
-                cam.MoveSpeed = 10f;
-            }
-            trackBar1.Value = (int)(cam.MoveSpeed)-1;
-            if (state[Key.W]) cam.Move(0f, 0.1f, 0f);
-            if (state[Key.S]) cam.Move(0f, -0.1f, 0f);
-            if (state[Key.A]) cam.Move(-0.1f, 0f, 0f);
-            if (state[Key.D]) cam.Move(0.1f, 0f, 0f);
-            if (state[Key.E]) cam.Move(0f, 0f, 0.1f);
-            if (state[Key.Q]) cam.Move(0f, 0f, -0.1f);
-        }
-        
-        private void checkmouse()
-        {
-            MouseState mstate = Mouse.GetState();
-            Point p = glcontrol1.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
-            float x = -(p.X - (glcontrol1.Width / 2));
-            float y = -(p.Y - (glcontrol1.Height / 2));
-            cam.AddRotation(x, y);
-            Render(new Rectangle(new Point(0, 0), new Size(432, 324)), 320, 240, glcontrol1);
-        }
-
         private void openLevelFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog loadobj = new OpenFileDialog();
@@ -147,25 +107,11 @@ namespace LakiTool
                 renderer.SetRenderMode(LakiTool.Render.RenderMode.F3D);
                 renderer.rendererObject.F3Drenderer.lines = File.ReadAllLines(loadobj.FileName);
                 renderer.rendererObject.F3Drenderer.fileName = loadobj.FileName;
-                timer1.Enabled = true;
                 renderer.rendererObject.F3Drenderer.seq = true;
                 renderer.initRenderer();
+
+                StartRenderLoop();
             }
-        }
-
-        private void timer(object sender, EventArgs e)
-        {
-            timer1.Enabled ^= true;
-        }
-        
-        private void regmousedown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            mic = true;
-        }
-
-        private void remouseup(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            mic = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -185,7 +131,8 @@ namespace LakiTool
                 renderer.SetRenderMode(LakiTool.Render.RenderMode.Geo);
                 renderer.rendererObject.Georenderer.lines = File.ReadAllLines(loadobj.FileName);
                 renderer.initRenderer();
-                timer1.Enabled = true;
+
+                StartRenderLoop();
             }
         }
 
@@ -228,8 +175,157 @@ namespace LakiTool
                 renderer.SetRenderMode(LakiTool.Render.RenderMode.Collision);
                 renderer.rendererObject.Colrenderer.lines = File.ReadAllLines(loadobj.FileName);
                 renderer.initRenderer();
-                timer1.Enabled = true;
+
+                StartRenderLoop();
             }
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            StopRenderLoop();
+        }
+
+        #region Input
+
+        Vector2 PreviousMousePosition = new Vector2();
+        bool mic = false;
+
+        private void checkkeys(float deltaTime)
+        {
+            KeyboardState state = Keyboard.GetState();
+
+            if (state[Key.Plus] || state[Key.KeypadPlus])
+                if (trackBar1.Value < trackBar1.Maximum) trackBar1.Value++;
+            if (state[Key.Minus] || state[Key.KeypadMinus])
+                if (trackBar1.Value > trackBar1.Minimum) trackBar1.Value--;
+
+            Vector3 movement = Vector3.Zero;
+            if (state[Key.W]) movement += Vector3.UnitY;
+            if (state[Key.S]) movement += -Vector3.UnitY;
+            if (state[Key.D]) movement += Vector3.UnitX;
+            if (state[Key.A]) movement += -Vector3.UnitX;
+            if (state[Key.E]) movement += Vector3.UnitZ;
+            if (state[Key.Q]) movement += -Vector3.UnitZ;
+
+            if (movement.LengthSquared > 0.05f) movement.NormalizeFast();
+
+            movement = Vector3.Multiply(movement, (trackBar1.Value + 1) * deltaTime * 60f);
+            cam.Move(movement.X, movement.Y, movement.Z);
+        }
+
+        private void checkmouse()
+        {
+            MouseState mstate = Mouse.GetState();
+
+            Vector2 CurrentMousePosition = new Vector2(mstate.X, mstate.Y);
+            
+            if (mstate.IsButtonDown(MouseButton.Left) && mic)
+            {
+                Vector2 delta = CurrentMousePosition - PreviousMousePosition;
+                cam.AddRotation(-delta.X, -delta.Y);
+
+                Rectangle glControlScreenRect = glcontrol1.RectangleToScreen(glcontrol1.ClientRectangle);
+                if (Cursor.Position.X < glControlScreenRect.Left) Cursor.Position = new Point(glControlScreenRect.Right, Cursor.Position.Y);
+                else if (Cursor.Position.X > glControlScreenRect.Right) Cursor.Position = new Point(glControlScreenRect.Left, Cursor.Position.Y);
+                if (Cursor.Position.Y < glControlScreenRect.Top) Cursor.Position = new Point(Cursor.Position.X, glControlScreenRect.Bottom);
+                else if (Cursor.Position.Y > glControlScreenRect.Bottom) Cursor.Position = new Point(Cursor.Position.X, glControlScreenRect.Top);
+            }
+
+            PreviousMousePosition = CurrentMousePosition;
+        }
+
+        private void regmousedown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            mic = true;
+        }
+
+        private void remouseup(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            mic = false;
+        }
+
+        #endregion
+
+        #region Render Loop
+
+        bool isRenderLoopEnabled;
+
+        private void StartRenderLoop()
+        {
+            if (isRenderLoopEnabled) return;
+            isRenderLoopEnabled = true;
+
+            Application.Idle += Application_Idle;
+            InitializeTimer();
+        }
+
+        private void StopRenderLoop()
+        {
+            if (!isRenderLoopEnabled) return;
+            isRenderLoopEnabled = false;
+
+            StopTimer();
+            Application.Idle -= Application_Idle;
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            if (!ContainsFocus) return;
+
+            while (glcontrol1.IsIdle)
+            {
+                doRenderStuff(deltaTime);
+            }
+        }
+
+        #endregion
+
+        #region Timers
+
+        Stopwatch stopwatch;
+
+        float totalElapsedTime;
+        float deltaTime;
+
+        float lastFPSUpdate;
+        int framesCounted;
+
+        const float FPS_UPDATE_INTERVAL = 0.5f;
+
+        void InitializeTimer()
+        {
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+            label1.Visible = true;
+        }
+
+        void ProcessTimer()
+        {
+            float currentTime = stopwatch.ElapsedMilliseconds / 1000.0f;
+
+            deltaTime = currentTime - totalElapsedTime;
+            totalElapsedTime = currentTime;
+
+            PrintFPS();
+        }
+
+        void StopTimer()
+        {
+            label1.Visible = false;
+            stopwatch.Stop();
+        }
+
+        void PrintFPS()
+        {
+            framesCounted++;
+            if (totalElapsedTime - lastFPSUpdate >= FPS_UPDATE_INTERVAL)
+            {
+                label1.Text = $"{framesCounted * (1 / FPS_UPDATE_INTERVAL)} FPS";
+                framesCounted = 0;
+                lastFPSUpdate = totalElapsedTime;
+            }
+        }
+
+        #endregion
     }
 }

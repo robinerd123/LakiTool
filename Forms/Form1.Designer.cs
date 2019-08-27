@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.glcontrol1 = new OpenTK.GLControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,7 +37,6 @@
             this.openLevelScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gamePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -64,6 +62,9 @@
             // 
             // glcontrol1
             // 
+            this.glcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.glcontrol1.BackColor = System.Drawing.Color.Black;
             this.glcontrol1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.glcontrol1.Location = new System.Drawing.Point(206, 27);
@@ -102,28 +103,28 @@
             // openLevelFolderToolStripMenuItem
             // 
             this.openLevelFolderToolStripMenuItem.Name = "openLevelFolderToolStripMenuItem";
-            this.openLevelFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openLevelFolderToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openLevelFolderToolStripMenuItem.Text = "Open DL data";
             this.openLevelFolderToolStripMenuItem.Click += new System.EventHandler(this.openLevelFolderToolStripMenuItem_Click);
             // 
             // openCollisionDataToolStripMenuItem
             // 
             this.openCollisionDataToolStripMenuItem.Name = "openCollisionDataToolStripMenuItem";
-            this.openCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openCollisionDataToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openCollisionDataToolStripMenuItem.Text = "Open collision data";
             this.openCollisionDataToolStripMenuItem.Click += new System.EventHandler(this.openCollisionDataToolStripMenuItem_Click);
             // 
             // openGeoScriptToolStripMenuItem
             // 
             this.openGeoScriptToolStripMenuItem.Name = "openGeoScriptToolStripMenuItem";
-            this.openGeoScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openGeoScriptToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openGeoScriptToolStripMenuItem.Text = "Open Geo Script";
             this.openGeoScriptToolStripMenuItem.Click += new System.EventHandler(this.openGeoScriptToolStripMenuItem_Click);
             // 
             // openLevelScriptToolStripMenuItem
             // 
             this.openLevelScriptToolStripMenuItem.Name = "openLevelScriptToolStripMenuItem";
-            this.openLevelScriptToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openLevelScriptToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.openLevelScriptToolStripMenuItem.Text = "Open Level script";
             // 
             // setToolStripMenuItem
@@ -137,17 +138,14 @@
             // gamePathToolStripMenuItem
             // 
             this.gamePathToolStripMenuItem.Name = "gamePathToolStripMenuItem";
-            this.gamePathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.gamePathToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.gamePathToolStripMenuItem.Text = "Game folder path";
             this.gamePathToolStripMenuItem.Click += new System.EventHandler(this.gamePathToolStripMenuItem_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 16;
-            this.timer1.Tick += new System.EventHandler(this.doRenderStuff);
-            // 
             // trackBar1
             // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar1.Location = new System.Drawing.Point(206, 357);
             this.trackBar1.Maximum = 9;
             this.trackBar1.Name = "trackBar1";
@@ -156,6 +154,8 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -257,6 +257,7 @@
             // 
             // button3
             // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Location = new System.Drawing.Point(542, 33);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 23);
@@ -273,9 +274,11 @@
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "0 FPS";
+            this.label1.Visible = false;
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(422, 387);
             this.label2.Name = "label2";
@@ -285,6 +288,7 @@
             // 
             // radioButton1
             // 
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton1.AutoSize = true;
             this.radioButton1.Enabled = false;
             this.radioButton1.Location = new System.Drawing.Point(473, 385);
@@ -296,6 +300,7 @@
             // 
             // radioButton2
             // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton2.AutoSize = true;
             this.radioButton2.Enabled = false;
             this.radioButton2.Location = new System.Drawing.Point(542, 385);
@@ -319,13 +324,13 @@
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.glcontrol1);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(666, 445);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LakiTool Alpha";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -345,7 +350,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLevelFolderToolStripMenuItem;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
