@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace LakiTool.Render
 {
-    class GeoRenderer
+    class GeoRenderer: IDisposable
     {
         private bool inited = false;
 
@@ -50,6 +50,14 @@ namespace LakiTool.Render
                         //GL.PopMatrix();
                         break;
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (Geo.GeoObject geoObject in geoObjects)
+            {
+                if (geoObject != null) geoObject.Dispose();
             }
         }
     }

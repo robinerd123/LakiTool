@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace LakiTool.Render
 {
-    class F3DRenderer
+    class F3DRenderer: IDisposable
     {
         private bool inited = false;
         
@@ -22,6 +22,11 @@ namespace LakiTool.Render
         public LUTUtil lutmanager = new LUTUtil();
         public List<int> torender = new List<int>();
         public List<GBI.Utils.LSUtil> labelsearchers = new List<GBI.Utils.LSUtil>();
+
+        bool displayListGenerated;
+        int displayListObject;
+
+        bool isDisposed;
 
         public void SetInitialDataFromLabelName(string labelname)
         {
@@ -44,21 +49,50 @@ namespace LakiTool.Render
             LUTc = lutmanager.luts;
             parser = new ParseF3D(F3DUtils.getF3DCommandsFromLines(lines), lutmanager.jumpContainer);
             labelsearchers = F3DUtils.getLabelSearchersFromLabelContainer(new Labels.LabelContainer(Labels.Utils.LabelUtil.getLabelListFromModelFile(fileName)), lines);
+
+            displayListGenerated = false;
+        }
+
+        public void Dispose()
+        {
+            if (isDisposed) return;
+            isDisposed = true;
+
+            if (displayListGenerated)
+            {
+                GL.DeleteLists(displayListObject, 1);
+                displayListGenerated = false;
+            }
         }
 
         public void Render()
         {
             if (!inited) return;
-            GL.Begin(BeginMode.Triangles);
-            if (!seq)
+
+            if (!displayListGenerated)
             {
-                parser.ParseDL(startCommand, LUTc, SpecialRendering.Off, labelsearchers);
+                displayListObject = GL.GenLists(1);
+                GL.NewList(displayListObject, ListMode.Compile);
+
+                GL.Begin(PrimitiveType.Triangles);
+
+                if (!seq)
+                {
+                    parser.ParseDL(startCommand, LUTc, SpecialRendering.Off, labelsearchers);
+                }
+                else
+                {
+                    parser.ParseDL(0, LUTc, SpecialRendering.SEQ);
+                }
+
+                GL.End();
+
+                GL.EndList();
+
+                displayListGenerated = true;
             }
-            else
-            {
-                parser.ParseDL(0, LUTc, SpecialRendering.SEQ);
-            }
-            GL.End();
+
+            GL.CallList(displayListObject);
         }
     }
 }

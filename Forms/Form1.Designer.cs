@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.glcontrol1 = new OpenTK.GLControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLevelFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,28 +52,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.lakiToolGLControl1 = new LakiTool.Forms.LakiToolGLControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // glcontrol1
-            // 
-            this.glcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.glcontrol1.BackColor = System.Drawing.Color.Black;
-            this.glcontrol1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.glcontrol1.Location = new System.Drawing.Point(206, 27);
-            this.glcontrol1.Name = "glcontrol1";
-            this.glcontrol1.Size = new System.Drawing.Size(432, 324);
-            this.glcontrol1.TabIndex = 7;
-            this.glcontrol1.VSync = true;
-            this.glcontrol1.Load += new System.EventHandler(this.glcontrol1_Load);
-            this.glcontrol1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.regmousedown);
-            this.glcontrol1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.remouseup);
             // 
             // menuStrip1
             // 
@@ -310,6 +294,23 @@
             this.radioButton2.Text = "Display List(s)";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
+            // lakiToolGLControl1
+            // 
+            this.lakiToolGLControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lakiToolGLControl1.BackColor = System.Drawing.Color.Black;
+            this.lakiToolGLControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lakiToolGLControl1.Location = new System.Drawing.Point(206, 27);
+            this.lakiToolGLControl1.Name = "lakiToolGLControl1";
+            this.lakiToolGLControl1.Size = new System.Drawing.Size(432, 324);
+            this.lakiToolGLControl1.TabIndex = 21;
+            this.lakiToolGLControl1.VSync = false;
+            this.lakiToolGLControl1.Load += new System.EventHandler(this.LakiToolGLControl1_Load);
+            this.lakiToolGLControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LakiToolGLControl1_MouseDown);
+            this.lakiToolGLControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LakiToolGLControl1_MouseUp);
+            this.lakiToolGLControl1.Resize += new System.EventHandler(this.LakiToolGLControl1_Resize);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,8 +323,8 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.glcontrol1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.lakiToolGLControl1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(666, 445);
             this.Name = "Form1";
@@ -345,8 +346,6 @@
         }
 
         #endregion
-
-        private OpenTK.GLControl glcontrol1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLevelFolderToolStripMenuItem;
@@ -371,5 +370,6 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ToolStripMenuItem openLevelScriptToolStripMenuItem;
+        private Forms.LakiToolGLControl lakiToolGLControl1;
     }
 }
