@@ -19,6 +19,7 @@ namespace LakiTool
         private void LakiToolGLControl1_Load(object sender, EventArgs e)
         {
             InitialiseView();
+            ResetCamera();
         }
 
         private void LakiToolGLControl1_Resize(object sender, EventArgs e)

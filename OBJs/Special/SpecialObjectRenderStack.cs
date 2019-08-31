@@ -70,7 +70,7 @@ namespace LakiTool.OBJs.Special
             f = true;
 
             OBJs.Util.ObjUtil.setUpCubeDataRendering(0.8f, 0.2f, 0.2f);
-            GL.Begin(BeginMode.Lines);
+            GL.Begin(PrimitiveType.Lines);
             for (int i = 0; i<cubeData.Count; i++)
             {
                 cubeData[i].Render();

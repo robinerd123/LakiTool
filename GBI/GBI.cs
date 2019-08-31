@@ -73,7 +73,7 @@ namespace LakiTool.GBI
             GL.End();
             GL.Light(LightName.Light0, LightParameter.Diffuse, new float[] { (float)r / 255f, (float)g / 255f, (float)g / 255f, (float)a / 255f });
             GL.ColorMaterial(MaterialFace.Front, ColorMaterialParameter.Diffuse);
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
         }
 
         public void gsSPLight(float[] lightcolor, byte type)
@@ -81,7 +81,7 @@ namespace LakiTool.GBI
             GL.End();
             GL.Light(LightName.Light0, (type == 1) ? LightParameter.Diffuse : LightParameter.Ambient, lightcolor);
             GL.ColorMaterial(MaterialFace.Front, (type == 1) ? ColorMaterialParameter.Diffuse : ColorMaterialParameter.Ambient);
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
         }
 
         public void gsSPVertex(Vtx[] verteces, byte length, byte start)

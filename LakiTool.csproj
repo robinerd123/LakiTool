@@ -62,6 +62,9 @@
     <Compile Include="C\CConsts.cs" />
     <Compile Include="C\Utils\CUtils.cs" />
     <Compile Include="C\Utils\GCUtil.cs" />
+    <Compile Include="Forms\LakiToolGLControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GBI\DL.cs" />
     <Compile Include="GBI\F3DCommand.cs" />
     <Compile Include="GBI\F3DParam.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LakiTool.Render
 {
-    class LvlRenderer
+    class LvlRenderer: IDisposable
     {
         private bool inited = false;
         //private Lvl.LevelScript levelScript = new Lvl.LevelScript();
@@ -24,6 +24,11 @@ namespace LakiTool.Render
         {
             if (!inited) return;
             //still need to add shit here
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }

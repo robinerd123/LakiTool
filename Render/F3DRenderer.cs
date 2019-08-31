@@ -50,6 +50,8 @@ namespace LakiTool.Render
             parser = new ParseF3D(F3DUtils.getF3DCommandsFromLines(lines), lutmanager.jumpContainer);
             labelsearchers = F3DUtils.getLabelSearchersFromLabelContainer(new Labels.LabelContainer(Labels.Utils.LabelUtil.getLabelListFromModelFile(fileName)), lines);
 
+            GL.Enable(EnableCap.Texture2D);
+
             displayListGenerated = false;
         }
 

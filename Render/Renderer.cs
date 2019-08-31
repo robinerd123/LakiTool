@@ -23,18 +23,16 @@ namespace LakiTool.Render
             switch (mode)
             {
                 case RenderMode.F3D:
-                    if (rendererObject.F3Drenderer != null) rendererObject.F3Drenderer.Dispose();
-                    rendererObject.F3Drenderer = new F3DRenderer();
+                    rendererObject.CreateF3DRenderer();
                     break;
                 case RenderMode.Collision:
-                    rendererObject.Colrenderer = new ColRenderer();
+                    rendererObject.CreateColRenderer();
                     break;
                 case RenderMode.Geo:
-                    if (rendererObject.Georenderer != null) rendererObject.Georenderer.Dispose();
-                    rendererObject.Georenderer = new GeoRenderer();
+                    rendererObject.CreateGeoRenderer();
                     break;
                 case RenderMode.Level:
-                    rendererObject.Lvlrenderer = new LvlRenderer();
+                    rendererObject.CreateLvlRenderer();
                     break;
             }
         }
@@ -53,8 +51,7 @@ namespace LakiTool.Render
 
         public void Dispose()
         {
-            if (rendererObject.F3Drenderer != null) rendererObject.F3Drenderer.Dispose();
-            if (rendererObject.Georenderer != null) rendererObject.Georenderer.Dispose();
+            rendererObject.Dispose();
         }
     }
 }
