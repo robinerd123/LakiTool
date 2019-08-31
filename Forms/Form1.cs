@@ -277,7 +277,7 @@ namespace LakiTool
         {
             Rectangle renderRect = lakiToolGLControl1.ClientRectangle;
             GL.Viewport(renderRect.X, renderRect.Y, renderRect.Width, renderRect.Height);
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(1.0f, renderRect.Width / (float)renderRect.Height, 1f, 1000.0f);
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(1.0f, renderRect.Width / (float)renderRect.Height, 1f, 2500.0f);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
         }
