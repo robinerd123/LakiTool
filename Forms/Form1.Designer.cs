@@ -305,7 +305,7 @@
             this.lakiToolGLControl1.Name = "lakiToolGLControl1";
             this.lakiToolGLControl1.Size = new System.Drawing.Size(432, 324);
             this.lakiToolGLControl1.TabIndex = 21;
-            this.lakiToolGLControl1.VSync = false;
+            this.lakiToolGLControl1.VSync = true;
             this.lakiToolGLControl1.Load += new System.EventHandler(this.LakiToolGLControl1_Load);
             this.lakiToolGLControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LakiToolGLControl1_MouseDown);
             this.lakiToolGLControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LakiToolGLControl1_MouseUp);
