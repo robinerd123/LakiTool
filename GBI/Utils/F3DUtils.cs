@@ -41,7 +41,7 @@ namespace LakiTool
                     GL.Disable(EnableCap.Lighting);
                 }
             }
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
         }
 
         public static void setUpVertColor(byte r, byte g, byte b, byte a, uint geommode)

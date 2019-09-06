@@ -15,7 +15,7 @@ namespace LakiTool.Geo
         RenderObject
     }
 
-    class GeoObject
+    class GeoObject: IDisposable
     {
         public Geo.Rotation objRot = new Geo.Rotation();
         public Geo.Translation objTrans = new Geo.Translation();
@@ -58,6 +58,11 @@ namespace LakiTool.Geo
         private void SetScaling(Geo.Scaling scaleObj)
         {
             GL.Scale(scaleObj.GetVector());
+        }
+
+        public void Dispose()
+        {
+            if (f3d != null) f3d.Dispose();
         }
     }
 }

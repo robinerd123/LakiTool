@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace LakiTool.Render
 {
@@ -15,7 +11,7 @@ namespace LakiTool.Render
         Level
     }
 
-    class Renderer
+    class Renderer : IDisposable
     {
         private RenderMode mode;
         public RendererObject rendererObject = new RendererObject();
@@ -27,16 +23,16 @@ namespace LakiTool.Render
             switch (mode)
             {
                 case RenderMode.F3D:
-                    rendererObject.F3Drenderer = new F3DRenderer();
+                    rendererObject.CreateF3DRenderer();
                     break;
                 case RenderMode.Collision:
-                    rendererObject.Colrenderer = new ColRenderer();
+                    rendererObject.CreateColRenderer();
                     break;
                 case RenderMode.Geo:
-                    rendererObject.Georenderer = new GeoRenderer();
+                    rendererObject.CreateGeoRenderer();
                     break;
                 case RenderMode.Level:
-                    rendererObject.Lvlrenderer = new LvlRenderer();
+                    rendererObject.CreateLvlRenderer();
                     break;
             }
         }
@@ -51,6 +47,11 @@ namespace LakiTool.Render
             GL.Color3(1.0f, 1.0f, 1.0f); //reset color to white
             F3DUtils.setUpWrapST(0, 0); //reset wrap data
             rendererObject.Render();
+        }
+
+        public void Dispose()
+        {
+            rendererObject.Dispose();
         }
     }
 }

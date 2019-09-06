@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using OpenTK;
-using OpenTK.Graphics;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
-using System.Drawing.Imaging;
 using OpenTK.Input;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using LakiTool;
-using System.Diagnostics;
 
 namespace LakiTool
 {
@@ -25,76 +16,15 @@ namespace LakiTool
             InitializeComponent();
         }
 
-        static Camera cam = new Camera();
-
-
-        private void glcontrol1_Load(object sender, EventArgs e)
+        private void LakiToolGLControl1_Load(object sender, EventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Matrix4 modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref modelview);
-            GL.ClearColor(Color.Black);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.Texture2D);
-        }
-
-        private void doRenderStuff(float deltaTime)
-        {
-            checkkeys(deltaTime);
-            checkmouse();
-
-            Render(glcontrol1);
-
-            ProcessTimer();
-        }
-
-        public void Render(GLControl RenderPanel)
-        {
-            Rectangle renderRect = RenderPanel.ClientRectangle;
-
-            GL.Viewport(renderRect.X, renderRect.Y, renderRect.Width, renderRect.Height);
-            Matrix4 projection = cam.GetViewMatrix() * Matrix4.CreatePerspectiveFieldOfView(1.0f, renderRect.Width / (float)renderRect.Height, 1f, 1000.0f);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref projection);
             InitialiseView();
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            GL.Enable(EnableCap.ColorMaterial);
-            GL.Enable(EnableCap.Normalize);
-            GL.ShadeModel(ShadingModel.Smooth);
-            GL.Enable(EnableCap.Lighting);
-            GL.Enable(EnableCap.Light0);
-            GL.Enable(EnableCap.Texture2D);
-            Vector3 lookat = new Vector3();
-            lookat.X = (float)(Math.Cos((float)cam.Orientation.X) * Math.Cos((float)cam.Orientation.Y));
-            lookat.Y = (float)Math.Sin((float)cam.Orientation.Y);
-            lookat.Z = (float)(Math.Sin((float)cam.Orientation.X) * Math.Cos((float)cam.Orientation.Y));
-            GL.Light(LightName.Light0, LightParameter.Position, new float[] { Math.Abs(lookat.X), Math.Abs(lookat.Y), Math.Abs(lookat.Z), 0.0f });
-
-            renderer.Render();
-
-            RenderPanel.SwapBuffers();
+            ResetCamera();
         }
 
-        LakiTool.Render.Renderer renderer = new LakiTool.Render.Renderer();
-
-        public static void InitialiseView()
+        private void LakiToolGLControl1_Resize(object sender, EventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Matrix4 modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref modelview);
-            GL.ClearColor(Color.LightBlue);
-            GL.CullFace(CullFaceMode.Back);
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            GL.Enable(EnableCap.DepthTest);
-            GL.DepthFunc(DepthFunction.Lequal);
-            GL.Enable(EnableCap.AlphaTest);
-            GL.AlphaFunc(AlphaFunction.Gequal, 0.05f);
+            UpdateProjectionMatrix();
         }
 
         private void openLevelFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -116,7 +46,7 @@ namespace LakiTool
 
         private void button3_Click(object sender, EventArgs e)
         {
-            cam.Position = Vector3.Zero;
+            ResetCamera();
         }
 
         private void openGeoScriptToolStripMenuItem_Click(object sender, EventArgs e)
@@ -218,13 +148,13 @@ namespace LakiTool
             MouseState mstate = Mouse.GetState();
 
             Vector2 CurrentMousePosition = new Vector2(mstate.X, mstate.Y);
-            
+
             if (mstate.IsButtonDown(MouseButton.Left) && mic)
             {
                 Vector2 delta = CurrentMousePosition - PreviousMousePosition;
                 cam.AddRotation(-delta.X, -delta.Y);
 
-                Rectangle glControlScreenRect = glcontrol1.RectangleToScreen(glcontrol1.ClientRectangle);
+                Rectangle glControlScreenRect = lakiToolGLControl1.RectangleToScreen(lakiToolGLControl1.ClientRectangle);
                 if (Cursor.Position.X < glControlScreenRect.Left) Cursor.Position = new Point(glControlScreenRect.Right, Cursor.Position.Y);
                 else if (Cursor.Position.X > glControlScreenRect.Right) Cursor.Position = new Point(glControlScreenRect.Left, Cursor.Position.Y);
                 if (Cursor.Position.Y < glControlScreenRect.Top) Cursor.Position = new Point(Cursor.Position.X, glControlScreenRect.Bottom);
@@ -234,12 +164,12 @@ namespace LakiTool
             PreviousMousePosition = CurrentMousePosition;
         }
 
-        private void regmousedown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void LakiToolGLControl1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             mic = true;
         }
 
-        private void remouseup(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void LakiToolGLControl1_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             mic = false;
         }
@@ -247,6 +177,9 @@ namespace LakiTool
         #endregion
 
         #region Render Loop
+
+        Render.Renderer renderer = new Render.Renderer();
+        Camera cam = new Camera();
 
         bool isRenderLoopEnabled;
 
@@ -264,18 +197,95 @@ namespace LakiTool
             if (!isRenderLoopEnabled) return;
             isRenderLoopEnabled = false;
 
+            renderer.Dispose();
+
             StopTimer();
             Application.Idle -= Application_Idle;
         }
 
-        void Application_Idle(object sender, EventArgs e)
+        private void Application_Idle(object sender, EventArgs e)
         {
             if (!ContainsFocus) return;
 
-            while (glcontrol1.IsIdle)
+            while (lakiToolGLControl1.IsIdle)
             {
-                doRenderStuff(deltaTime);
+                Update(deltaTime);
             }
+        }
+
+        private void Update(float deltaTime)
+        {
+            checkkeys(deltaTime);
+            checkmouse();
+
+            Render(lakiToolGLControl1);
+
+            ProcessTimer();
+        }
+
+        private void Render(GLControl RenderPanel)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            Matrix4 modelview = cam.GetViewMatrix();
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadMatrix(ref modelview);
+
+            Vector3 lookat = new Vector3();
+            lookat.X = (float)(Math.Cos((float)cam.Orientation.X) * Math.Cos((float)cam.Orientation.Y));
+            lookat.Y = (float)Math.Sin((float)cam.Orientation.Y);
+            lookat.Z = (float)(Math.Sin((float)cam.Orientation.X) * Math.Cos((float)cam.Orientation.Y));
+            GL.Light(LightName.Light0, LightParameter.Position, new float[] { Math.Abs(lookat.X), Math.Abs(lookat.Y), Math.Abs(lookat.Z), 0.0f });
+
+            renderer.Render();
+
+            RenderPanel.SwapBuffers();
+        }
+
+        private void InitialiseView()
+        {
+            GL.ClearColor(Color.LightBlue);
+
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+            GL.Enable(EnableCap.DepthTest);
+            GL.DepthFunc(DepthFunction.Lequal);
+
+            GL.Enable(EnableCap.AlphaTest);
+            GL.AlphaFunc(AlphaFunction.Gequal, 0.05f);
+
+            GL.Enable(EnableCap.ColorMaterial);
+            GL.Enable(EnableCap.Normalize);
+            GL.Enable(EnableCap.Texture2D);
+
+            GL.ShadeModel(ShadingModel.Smooth);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+
+            GL.Enable(EnableCap.Lighting);
+            GL.Enable(EnableCap.Light0);
+
+#if DEBUG
+            InitializeDebugMessages();
+#endif
+        }
+
+        private void UpdateProjectionMatrix()
+        {
+            Rectangle renderRect = lakiToolGLControl1.ClientRectangle;
+            GL.Viewport(renderRect.X, renderRect.Y, renderRect.Width, renderRect.Height);
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(1.0f, renderRect.Width / (float)renderRect.Height, 1f, 2500.0f);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref projection);
+        }
+
+        private void ResetCamera()
+        {
+            cam.Position = Vector3.Zero;
+            cam.Orientation = Vector3.UnitZ;
         }
 
         #endregion
@@ -325,6 +335,47 @@ namespace LakiTool
                 lastFPSUpdate = totalElapsedTime;
             }
         }
+
+        #endregion
+
+        #region Debug
+
+#if DEBUG
+
+        DebugProc DebugProcCallback;
+
+        void InitializeDebugMessages()
+        {
+            GL.Enable(EnableCap.DebugOutput);
+            DebugProcCallback = DebugMessage;
+            GL.DebugMessageCallback(DebugProcCallback, IntPtr.Zero);
+        }
+
+        void DebugMessage(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
+        {
+            var msg = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(message, length);
+            Console.WriteLine(string.Format("{0} {1} {2}", severity, type, msg));
+        }
+
+        //static System.Runtime.InteropServices.GCHandle _logCallbackHandle;
+        //static readonly DebugProcArb debugDelegate = new DebugProcArb(DebugMessage);
+
+        //void InitializeDebugMessages()
+        //{
+        //    GL.Enable(EnableCap.DebugOutput);
+        //    GL.Enable(EnableCap.DebugOutputSynchronous);
+        //    _logCallbackHandle = System.Runtime.InteropServices.GCHandle.Alloc(debugDelegate);
+        //    var nullptr = new IntPtr(0);
+        //    GL.Arb.DebugMessageCallback(debugDelegate, nullptr);
+        //}
+
+        //static void DebugMessage(DebugSource source, DebugType type, int id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam)
+        //{
+        //    var msg = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(message, length);
+        //    Console.WriteLine(string.Format("{0} {1} {2}", severity, type, msg));
+        //}
+
+#endif
 
         #endregion
     }

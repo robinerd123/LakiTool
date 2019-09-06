@@ -13,7 +13,7 @@ namespace LakiTool.Render
         OnlySpecial
     }
 
-    class ColRenderer
+    class ColRenderer: IDisposable
     {
         private bool inited = false;
 
@@ -23,6 +23,11 @@ namespace LakiTool.Render
         LakiTool.Col.ParseCol parse;
         OBJs.Special.SpecialObjectRenderStack specialObjects = new OBJs.Special.SpecialObjectRenderStack();
 
+        bool displayListGenerated;
+        int displayListObject;
+
+        bool isDisposed;
+
         public void Init()
         {
             inited = true;
@@ -31,18 +36,47 @@ namespace LakiTool.Render
             GL.Disable(EnableCap.Lighting);
             GL.Disable(EnableCap.Light0);
             GL.Disable(EnableCap.ColorMaterial);
+
+            displayListGenerated = false;
+        }
+
+        public void Dispose()
+        {
+            if (isDisposed) return;
+            isDisposed = true;
+
+            if (displayListGenerated)
+            {
+                GL.DeleteLists(displayListObject, 1);
+                displayListGenerated = false;
+            }
         }
 
         public void Render()
         {
             if (!inited) return;
+
             GL.Disable(EnableCap.Texture2D);
+
             if (colMode == ColMode.Full)
             {
-                GL.Begin(BeginMode.Triangles);
-                parse.ParseColData();
-                GL.End();
+                if (!displayListGenerated)
+                {
+                    displayListObject = GL.GenLists(1);
+                    GL.NewList(displayListObject, ListMode.Compile);
+
+                    GL.Begin(PrimitiveType.Triangles);
+                    parse.ParseColData();
+                    GL.End();
+
+                    GL.EndList();
+
+                    displayListGenerated = true;
+                }
+
+                GL.CallList(displayListObject);
             }
+
             specialObjects.Render();
         }
     }

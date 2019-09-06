@@ -59,7 +59,7 @@ namespace LakiTool.Col
         public void special_object(short X, short Y, short Z)
         {
             GL.End();
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
         }
     }
 }
